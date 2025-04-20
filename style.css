@@ -1,33 +1,14 @@
 /* =================================== */
-/* STYLE.CSS - Party Style v9.6      */
-/* Neon Glow Loader & Buttons        */
+/* STYLE.CSS - Party Style v8.1/v9.2 */
+/* Floating Glow Orbs Background       */
+/* Small Title, Small Buttons        */
+/* BASE FUNZIONANTE                */
 /* =================================== */
 
 /* --- Keyframes --- */
 @keyframes loading-loop { 0% { width: 0%; } 50% { width: 100%; } 100% { width: 0%; } } 
-
-/* Animazione per il Glow del Pulsante/Loader su Hover/Attivo */
-@keyframes intense-glow-pulse { 
-  0%, 100% { 
-    box-shadow: 
-      0 0 5px rgba(0, 255, 255, 0.7), /* Ciano interno */
-      0 0 10px rgba(0, 255, 255, 0.5), 
-      0 0 15px rgba(255, 0, 255, 0.5), /* Magenta esterno */
-      0 0 20px rgba(255, 0, 255, 0.3),
-      inset 0 0 3px 1px rgba(0,0,0,0.5); /* Ombra interna */
-    transform: scale(1); 
-  } 
-  50% { 
-    box-shadow: 
-      0 0 10px rgba(0, 255, 255, 1),   /* Più intenso */
-      0 0 20px rgba(0, 255, 255, 0.8), 
-      0 0 30px rgba(255, 0, 255, 0.8), 
-      0 0 40px rgba(255, 0, 255, 0.6),
-      inset 0 0 4px 1px rgba(0,0,0,0.4);
-    transform: scale(1.03); 
-  } 
-}
-
+@keyframes pulse-intense { 0% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } 50% { transform: scale(1.05); box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); } 100% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } }
+@keyframes animated-gradient-base { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } } 
 @keyframes flicker-intense { 0%, 19%, 23%, 27%, 54%, 60%, 100% { text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 18px #fff, 0 0 40px #0ff, 0 0 70px #0ff, 0 0 80px #0ff, 0 0 100px #0ff, 0 0 150px #0ff; opacity: 1; } 21%, 25%, 57% { text-shadow: 0 0 2px #fff, 0 0 5px #0ff, 0 0 10px #0ff; opacity: 0.6; } 30%, 40% { text-shadow: none; opacity: 0.3; } }
 @keyframes logo-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } } 
 @keyframes float-glow { 0% { transform: translate(0, 0) scale(1); opacity: 0.5; } 50% { transform: translate(15px, 10px) scale(1.1); opacity: 0.9; } 100% { transform: translate(0, 0) scale(1); opacity: 0.5; } }
@@ -39,48 +20,83 @@ body {
   box-sizing: border-box; padding: 5vw; text-align: center; color: white; 
   display: flex; flex-direction: column; justify-content: center; align-items: center; 
   min-height: 100vh; margin: 0; overflow: hidden; 
-  background-color: black; 
-  /* Rimosso gradiente dal body per non sovrapporre troppi effetti */
+  background-color: black; /* Base nera */
+  background-image: linear-gradient(135deg, #3a003a, #003a3a, #3a003a); 
+  background-size: 250% 250%; 
+  animation: animated-gradient-base 10s ease infinite; 
 } 
 
 /* --- Effetti Sfondo (Globi) --- */
-.glow-orb { content: ""; position: fixed; z-index: -1; border-radius: 50%; filter: blur(60px); animation: float-glow 12s ease-in-out infinite alternate; }
-.orb1 { width: 40vw; height: 40vw; max-width: 400px; max-height: 400px; background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, rgba(0,255,255,0) 70%); top: -10%; left: -10%; animation-duration: 14s; }
-.orb2 { width: 30vw; height: 30vw; max-width: 300px; max-height: 300px; background: radial-gradient(circle, rgba(255,0,255,0.3) 0%, rgba(255,0,255,0) 70%); bottom: -5%; right: -5%; animation-delay: -6s; animation-duration: 10s; }
+.glow-orb { 
+  content: ""; position: fixed; 
+  z-index: -1; /* Dietro contenuto */
+  border-radius: 50%; 
+  filter: blur(60px); 
+  animation: float-glow 12s ease-in-out infinite alternate; 
+}
+.orb1 { 
+  width: 40vw; height: 40vw; max-width: 400px; max-height: 400px;
+  background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, rgba(0,255,255,0) 70%); 
+  top: -10%; left: -10%; animation-duration: 14s; 
+}
+.orb2 { 
+  width: 30vw; height: 30vw; max-width: 300px; max-height: 300px;
+  background: radial-gradient(circle, rgba(255,0,255,0.3) 0%, rgba(255,0,255,0) 70%); 
+  bottom: -5%; right: -5%; animation-delay: -6s; animation-duration: 10s; 
+}
 
 /* --- Contenuto Principale --- */
-.main-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.main-content { 
+  position: relative; z-index: 1; /* Sopra gli effetti di sfondo */
+  display: flex; flex-direction: column; align-items: center; 
+  width: 100%; 
+  background-color: transparent; 
+}
 
 /* Logo */
-#logo-container img { display: block; max-width: 120px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 1.5em; animation: logo-float 3s ease-in-out infinite; background-color: transparent; }
+#logo-container {
+  line-height: 0; 
+  z-index: 1; 
+  position: relative; 
+  background-color: transparent; 
+  opacity: 0; /* Nascosto per GSAP */
+}
+#logo-container img { 
+  display: block; max-width: 120px; height: auto; 
+  margin-left: auto; margin-right: auto; margin-bottom: 1.5em; 
+  animation: logo-float 3s ease-in-out infinite; 
+  background-color: transparent; 
+}
 
-/* Titolo */
-h1 { font-size: 8vw; max-width: 95%; line-height: 1.1; color: #ffffff; margin-top: 0.5em; margin-bottom: 1.5em; animation: flicker-intense 1.2s linear infinite; word-wrap: break-word; font-weight: bold; } 
+/* Titolo (Piccolo) */
+h1 { 
+  font-size: 8vw; max-width: 95%; line-height: 1.1; color: #ffffff; 
+  margin-top: 0.5em; margin-bottom: 1.5em; 
+  animation: none; /* Flicker attivato da GSAP dopo ingresso */
+  word-wrap: break-word; 
+  font-weight: bold; 
+  opacity: 0; /* Nascosto per GSAP */
+} 
 
-/* Loader (Stile Neon) */
+/* Loader (Standard con Percentuale) */
 .loader-container { 
-  position: relative; width: 90%; max-width: 500px; height: 1.5em; /* Altezza leggermente ridotta */ 
-  background-color: rgba(10, 10, 10, 0.6); /* Sfondo scuro semi-trasparente */
-  border-radius: 1em; overflow: hidden; margin-bottom: 2.5em; 
-  border: 1px solid rgba(0, 255, 255, 0.4); /* Bordo ciano semi-trasparente */
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3), /* Glow ciano leggero */
-              inset 0 0 5px rgba(0,0,0,0.5); /* Ombra interna */
-  display: block; 
+  position: relative; width: 90%; max-width: 500px; height: 2em; 
+  background-color: rgba(51, 51, 51, 0.8); 
+  border-radius: 1.2em; overflow: hidden; margin-bottom: 2.5em; 
+  border: 1px solid #444; display: block; 
+  opacity: 0; /* Nascosto per GSAP */
 }
 .loader-bar { 
   height: 100%; width: 0%; 
-  /* Gradiente barra più vibrante e con ombra interna per profondità */
   background: linear-gradient(90deg, #ff00ff, #00ffff); 
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
-  border-radius: 1em; 
+  border-radius: 1.2em; 
   animation: loading-loop 3s linear infinite; 
 }
 #percentage-text { 
   position: absolute; left: 50%; top: 50%; 
   transform: translate(-50%, -50%); color: white; 
-  font-weight: bold; font-size: 0.8em; /* Testo percentuale più piccolo */
-  text-shadow: 1px 1px 3px rgba(0,0,0,1); /* Ombra testo più marcata */
-  z-index: 2; 
+  font-weight: bold; font-size: 0.9em; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.9); z-index: 2; 
   pointer-events: none; 
 }
 
@@ -88,34 +104,26 @@ h1 { font-size: 8vw; max-width: 95%; line-height: 1.1; color: #ffffff; margin-to
 .link-container { display: flex; flex-direction: column; align-items: center; gap: 1.2em; margin-top: 1em; width: 100%; max-width: 450px; }
 #loading-message, .link-container p { font-size: 1.2em; opacity: 0.7; }
 
-/* Pulsante (Stile Neon) */
+/* Pulsante (Piccolo, colori letti da Foglio) */
 .link-button { 
   position: relative; display: block; width: 100%; 
-  padding: 0.8em 1em; /* Padding leggermente aumentato per area touch */
-  /* Sfondo base scuro e semi-trasparente */
-  background: rgba(15, 15, 15, 0.65); 
-  color: white; text-decoration: none; 
+  padding: 0.7em 1em; color: white; text-decoration: none; 
   font-size: 1.3em; border-radius: 0.5em; font-weight: bold; 
-  /* Bordo Neon Ciano */
-  border: 1px solid rgba(0, 255, 255, 0.7); 
-  cursor: pointer; 
-  transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
-  /* Glow base leggero (ciano + magenta) */
-  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4), 
-              0 0 10px rgba(255, 0, 255, 0.2), 
-              inset 0 0 3px 1px rgba(0,0,0,0.5); 
-  line-height: 1.3; 
-  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6); 
+  border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer; 
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease; 
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), inset 0 0 3px 1px rgba(0,0,0,0.4); 
+  line-height: 1.3; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+  opacity: 0; /* Nascosto per GSAP Stagger */
 } 
 .link-button:hover, .link-button:active { 
   transform: scale(1.03); 
-  border-color: rgba(255, 255, 255, 0.8); /* Bordo diventa bianco più visibile */
-  /* Applica animazione glow intensa su hover/active */
-  animation: intense-glow-pulse 1s infinite alternate; 
-  /* Rimuoviamo il background color specifico letto dal foglio qui */
-  /* Il colore letto dal foglio viene ignorato per questo stile neon */
+  box-shadow: 0 0 18px #ff00ff, 0 0 35px #ff00ff, 0 0 45px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); 
+  animation: pulse-intense 0.8s infinite; 
+  border-color: rgba(255, 255, 255, 0.6); 
 } 
 
 /* Stili Errore Frontend */
-/* ... invariati ... */
+.error-message { color: #ff4444; font-weight: bold; margin-top: 2em; border: 1px solid #ff4444; padding: 1em; background-color: rgba(255, 0, 0, 0.1); border-radius: 0.5em; }
+body.error-page .glow-orb { display: none; } 
+body.error-page h1 { animation: none; text-shadow: none; color: #ff4444; }
