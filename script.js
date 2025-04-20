@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // API URL
     const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; 
-    const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; // Fallback colore pulsante
+    const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; 
 
     // Elementi DOM
     const titleElement = document.getElementById('page-title');
@@ -13,8 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Funzione Loader Percentuale ---
     function startLoaderAnimation() {
-        if (percText && loader) {
-             // Non mostrare subito il loader, lo fa GSAP
+        // SOLO la logica della percentuale qui. L'animazione CSS della barra parte da sola.
+        // L'apparizione del loader sarà gestita da GSAP.
+        if (percText && loader) { 
              let currentPercentage = 0;
              const intervalTime = 30; const increment = 1; 
              const intervalId = setInterval(() => {
@@ -28,36 +29,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Funzione Animazioni Ingresso con GSAP ---
     function animateElementsIn() {
         console.log("Avvio animazioni GSAP...");
+        // Controlla se gsap è caricato
         if (typeof gsap === 'undefined') {
             console.error("GSAP non caricato!");
-             // Fallback senza animazione
-             gsap.set([logoContainer, titleElement, loader, ".link-button"], { opacity: 1, y: 0 });
+            // Rendi elementi visibili senza animazione come fallback
+             if (logoContainer) logoContainer.style.opacity = 1;
+             if (titleElement) titleElement.style.opacity = 1;
+             if (loader) loader.style.opacity = 1;
+             document.querySelectorAll('.link-button').forEach(btn => btn.style.opacity = 1);
+             // Riattiva animazione flicker CSS
              if (titleElement) titleElement.style.animation = 'flicker-intense 1.2s linear infinite';
             return;
         }
 
-        // Imposta stato iniziale (nascosto e spostato)
+        // Imposta stato iniziale (invisibile e leggermente spostato in basso)
+        // Lo facciamo qui invece che solo nel CSS per sicurezza
         gsap.set([logoContainer, titleElement, loader, ".link-button"], { opacity: 0, y: 20 }); 
 
         const tl = gsap.timeline({ 
              defaults: { duration: 0.6, ease: "power2.out" },
              onComplete: () => {
-                 // Riattiva animazione flicker CSS DOPO l'ingresso
-                 if (titleElement) titleElement.style.animation = 'flicker-intense 1.2s linear infinite';
+                 // Riattiva l'animazione flicker CSS DOPO l'ingresso del titolo
+                 if (titleElement) {
+                     titleElement.style.animation = 'flicker-intense 1.2s linear infinite';
+                 }
                  console.log("Animazioni GSAP completate.");
              } 
         });
 
-        tl.to(logoContainer, { opacity: 1, y: 0, delay: 0.1 }) 
-          .to(titleElement, { opacity: 1, y: 0 }, "-=0.4")    
-          .to(loader, { opacity: 1, y: 0 }, "-=0.4") // Fa apparire il loader        
-          .to(".link-button", { opacity: 1, y: 0, stagger: 0.15 }, "-=0.3"); // Pulsanti in sequenza
+        tl.to(logoContainer, { opacity: 1, y: 0, delay: 0.1 }) // Logo appare per primo
+          .to(titleElement, { opacity: 1, y: 0 }, "-=0.4")    // Titolo subito dopo
+          .to(loader, { opacity: 1, y: 0 }, "-=0.4")        // Loader
+          .to(".link-button", { opacity: 1, y: 0, stagger: 0.1 }, "-=0.3"); // Pulsanti in sequenza
     }
 
 
     // --- Funzione Caricamento Dati ---
     async function loadData() {
-        startLoaderAnimation(); // Avvia solo percentuale subito
+        // Avvia solo la percentuale, l'apparizione del loader è gestita da GSAP
+        startLoaderAnimation(); 
         if (loadingMessage) loadingMessage.style.display = 'block'; 
 
         try {
@@ -68,59 +78,63 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.success && result.data) {
                 const data = result.data;
 
+                // Titolo
                 document.title = data.title || 'Magnolia 808 Hub';
                 if (titleElement) titleElement.textContent = data.title || 'MAGNOLIA 808';
 
+                // Logo
                 logoContainer.innerHTML = ''; 
                 if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
                     const logoFilename = data.logoUrl.trim(); 
                     const logoImg = document.createElement('img');
-                    logoImg.src = logoFilename; logoImg.alt = 'Logo'; 
-                    logoImg.onerror = () => { console.error("Errore caricando logo:", logoFilename); logoContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Logo non trovato</p>'; };
+                    logoImg.src = logoFilename; 
+                    logoImg.alt = 'Logo'; 
+                    logoImg.onerror = () => { /* Gestione errore */ };
                     logoContainer.appendChild(logoImg); 
-                    // if (titleElement) titleElement.style.marginTop = '0.5em'; // Margine gestito da CSS se logo c'è
-                } else { 
-                     if (titleElement) titleElement.style.marginTop = '0'; // Nessun margine extra
-                     console.log("Nessun logo specificato.");
+                    // Non impostiamo margini qui, lasciamo fare al CSS
+                } else {
+                    // Se non c'è logo, potremmo voler aggiungere un margine sopra il titolo
+                    if (titleElement) titleElement.style.marginTop = '1.5em'; 
                 }
                 
+                // Pulsanti Link
                 linkContainer.innerHTML = ''; 
                 if (data.links && data.links.length > 0) {
                     data.links.forEach(link => {
                         const button = document.createElement('a');
                         button.href = link.url; button.textContent = link.label; 
                         button.className = 'link-button'; button.target = '_top';
-                        
-                        // Applica background color letto dal foglio o default
                         button.style.background = link.color || defaultButtonColor; 
-                        
-                        // Imposta opacità iniziale per GSAP stagger
-                        // GSAP la gestirà, non serve metterla a 0 qui se usiamo gsap.set sopra
-                        // button.style.opacity = 0; 
+                        // Imposta opacità iniziale a 0 per GSAP stagger
+                        button.style.opacity = 0; 
                         linkContainer.appendChild(button); 
                     });
-                } else { linkContainer.innerHTML = '<p>Nessun link attivo.</p>'; }
+                } else {
+                    linkContainer.innerHTML = '<p>Nessun link attivo.</p>';
+                }
                 
                 if (loadingMessage) loadingMessage.style.display = 'none';
 
-                // Avvia animazioni GSAP dopo aver creato gli elementi
+                // *** CHIAMA L'ANIMAZIONE GSAP DOPO AVER CREATO GLI ELEMENTI ***
                 animateElementsIn(); 
 
-            } else { throw new Error(result.error || 'Errore API.'); }
+            } else {
+                throw new Error(result.error || 'Errore API.');
+            }
+
         } catch (error) {
             console.error('Errore caricamento dati:', error);
+            // ... gestione errore ...
             if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare: ${error.message}</p>`;
             if (titleElement) titleElement.textContent = 'Errore';
             document.title = 'Errore';
             if (loadingMessage) loadingMessage.style.display = 'none';
             if (loader) loader.style.display = 'none'; 
             document.body.classList.add('error-page'); 
-             // Se c'è errore, mostra subito gli elementi senza animazione per fallback
-             gsap.set([logoContainer, titleElement, loader, ".link-button"], { opacity: 1, y: 0 });
-             if (titleElement) titleElement.style.animation = 'flicker-intense 1.2s linear infinite'; // Prova a riattivare flicker anche su errore
         }
     }
     
-    // Avvia tutto
+    // --- Esecuzione Iniziale ---
+    // NON avviare l'animazione loader CSS subito, lo fa GSAP
     loadData(); 
 });
