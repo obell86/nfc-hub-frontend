@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // !!! INCOLLA QUI L'URL /exec DELLA TUA API GOOGLE APPS SCRIPT !!!
-    const apiUrl = 'YOUR_APPS_SCRIPT_API_URL_HERE'; 
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; 
     const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; // Fallback
 
     const titleElement = document.getElementById('page-title');
