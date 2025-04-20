@@ -1,83 +1,125 @@
-/* =================================== */
-/* STYLE.CSS - Party Style v9.3      */
-/* CSS Floating Images Background      */
-/* =================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    // API URL
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; 
+    const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; 
 
-/* --- Keyframes --- */
-@keyframes loading-loop { 0% { width: 0%; } 50% { width: 100%; } 100% { width: 0%; } } 
-@keyframes pulse-intense { 0% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } 50% { transform: scale(1.05); box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); } 100% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } }
-@keyframes flicker-intense { 0%, 19%, 23%, 27%, 54%, 60%, 100% { text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 18px #fff, 0 0 40px #0ff, 0 0 70px #0ff, 0 0 80px #0ff, 0 0 100px #0ff, 0 0 150px #0ff; opacity: 1; } 21%, 25%, 57% { text-shadow: 0 0 2px #fff, 0 0 5px #0ff, 0 0 10px #0ff; opacity: 0.6; } 30%, 40% { text-shadow: none; opacity: 0.3; } }
-@keyframes logo-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } } 
-/* Nuovo Keyframe per immagini fluttuanti/cadenti */
-@keyframes fall-float {
-  0% { transform: translateY(-150px) rotateZ(0deg); opacity: 0; } /* Parte da fuori schermo in alto */
-  10% { opacity: 0.8; } /* Appare */
-  90% { opacity: 0.8; } /* Rimane visibile */
-  100% { transform: translateY(110vh) rotateZ(360deg); opacity: 0; } /* Esce sotto ruotando */
-}
+    // Elementi DOM
+    const titleElement = document.getElementById('page-title');
+    const logoContainer = document.getElementById('logo-container');
+    const linkContainer = document.getElementById('link-container');
+    const loadingMessage = document.getElementById('loading-message');
+    const loader = document.getElementById('loader'); 
+    const percText = document.getElementById('percentage-text'); 
+    const backgroundContainer = document.querySelector('.background-elements'); // Contenitore per immagini sfondo
 
-/* --- Stili Generali --- */
-html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } 
-body { 
-  position: relative; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-  box-sizing: border-box; padding: 5vw; text-align: center; color: white; 
-  display: flex; flex-direction: column; justify-content: center; align-items: center; 
-  min-height: 100vh; margin: 0; overflow: hidden; /* Nasconde immagini che escono */
-  background-color: black; /* Sfondo nero base */
-} 
+    // --- Funzione Loader Percentuale ---
+    function startLoaderAnimation() {
+        if (percText && loader) {
+             loader.style.display = 'block';
+             let currentPercentage = 0;
+             const intervalTime = 30; const increment = 1; 
+             const intervalId = setInterval(() => {
+                 currentPercentage = (currentPercentage + increment); 
+                 if (currentPercentage > 100) { currentPercentage = 0; } 
+                 percText.textContent = Math.floor(currentPercentage) + "%"; 
+             }, intervalTime);
+        } else { console.warn("Loader/Percentuale non trovati."); }
+    }
 
-/* --- Effetti Sfondo CSS con Immagini --- */
-.background-elements {
-  position: fixed; /* Occupa tutto lo schermo */
-  top: 0; left: 0; width: 100%; height: 100%;
-  overflow: hidden; /* Nasconde parti di immagini che escono */
-  z-index: -1; /* Dietro il contenuto */
-  pointer-events: none; /* Non blocca i click */
-}
-/* Stile base per ogni immagine fluttuante */
-.bg-image {
-  position: absolute; /* Posizionate assolutamente nel contenitore */
-  top: -150px; /* Parte fuori schermo */
-  width: 50px; /* Dimensione base, può variare */
-  height: auto;
-  opacity: 0;
-  animation: fall-float linear infinite; /* Applica animazione caduta */
-}
-/* Stili specifici per differenziare le immagini (posizione, ritardo, durata, dimensione) */
-.bg-image.img1 { left: 10%; width: 40px; animation-duration: 12s; animation-delay: -1s; }
-.bg-image.img2 { left: 30%; width: 60px; animation-duration: 10s; animation-delay: -5s; }
-.bg-image.img3 { left: 50%; width: 45px; animation-duration: 14s; animation-delay: -3s; }
-.bg-image.img4 { left: 70%; width: 55px; animation-duration: 9s;  animation-delay: -7s; }
-.bg-image.img5 { left: 90%; width: 40px; animation-duration: 11s; animation-delay: -2s; }
-/* Aggiungi altre classi .imgX se hai più immagini da animare */
+    // --- Funzione per creare immagini fluttuanti (NUOVA!) ---
+    function createFloatingImages() {
+        if (!backgroundContainer) return; // Esci se il contenitore non esiste
 
-/* --- Contenuto Principale --- */
-.main-content { 
-  position: relative; z-index: 1; 
-  display: flex; flex-direction: column; align-items: center; 
-  width: 100%; 
-}
+        // !!! LISTA DELLE TUE IMMAGINI CARICATE SU GITHUB !!!
+        const imageSources = ["lips.png", "lollipop.png", "eye.png", "star-pop.png",]; 
+        const numberOfImages = 10; // Quante immagini creare in totale (si ripeteranno dalla lista)
 
-/* Logo */
-#logo-container img { display: block; max-width: 120px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 1.5em; animation: logo-float 3s ease-in-out infinite; }
+        for (let i = 0; i < numberOfImages; i++) {
+            const img = document.createElement('img');
+            img.classList.add('bg-image'); // Applica classe base CSS
+            
+            // Applica una classe specifica per variare stile/animazione (es. img1, img2...)
+            // Usiamo il modulo (%) per ciclare tra 5 stili diversi definiti nel CSS
+            img.classList.add('img' + ((i % 5) + 1)); 
+            
+            // Seleziona un'immagine casuale dalla lista
+            img.src = imageSources[Math.floor(Math.random() * imageSources.length)]; 
+            img.alt = ""; // Alt vuoto per immagini decorative
 
-/* Titolo */
-h1 { font-size: 8vw; max-width: 95%; line-height: 1.1; color: #ffffff; margin-top: 0; margin-bottom: 1.5em; animation: flicker-intense 1.2s linear infinite; word-wrap: break-word; } 
+            // Imposta un ritardo animazione casuale aggiuntivo per più varietà
+            img.style.animationDelay = `-${Math.random() * 10}s, ${parseFloat(getComputedStyle(img).animationDelay)}s`; // Combina delay CSS con uno casuale
+           
+            // Imposta posizione orizzontale casuale (sovrascrive left del CSS se necessario)
+            img.style.left = `${Math.random() * 95}%`; 
 
-/* Loader */
-.loader-container { position: relative; width: 90%; max-width: 500px; height: 2em; background-color: rgba(51, 51, 51, 0.8); border-radius: 1.2em; overflow: hidden; margin-bottom: 2.5em; border: 1px solid #444; display: block; }
-.loader-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ff00ff, #00ffff); border-radius: 1.2em; animation: loading-loop 3s linear infinite; }
-#percentage-text { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 0.9em; text-shadow: 1px 1px 2px rgba(0,0,0,0.9); z-index: 2; pointer-events: none; }
+            backgroundContainer.appendChild(img);
+        }
+        console.log(numberOfImages + " immagini di sfondo create.");
+    }
 
-/* Contenitore Pulsanti */
-.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.2em; margin-top: 1em; width: 100%; max-width: 450px; }
-#loading-message, .link-container p { font-size: 1.2em; opacity: 0.7; }
+    // --- Funzione Caricamento Dati (invariata logica API) ---
+    async function loadData() {
+        startLoaderAnimation(); 
+        if (loadingMessage) loadingMessage.style.display = 'block'; 
 
-/* Pulsante */
-.link-button { position: relative; display: block; width: 100%; padding: 0.7em 1em; color: white; text-decoration: none; font-size: 1.3em; border-radius: 0.5em; font-weight: bold; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease; box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), inset 0 0 3px 1px rgba(0,0,0,0.4); line-height: 1.3; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); } 
-.link-button:hover, .link-button:active { transform: scale(1.03); box-shadow: 0 0 18px #ff00ff, 0 0 35px #ff00ff, 0 0 45px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); animation: pulse-intense 0.8s infinite; border-color: rgba(255, 255, 255, 0.6); } 
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) { throw new Error(`Errore HTTP: ${response.status}`); }
+            const result = await response.json();
 
-/* Stili Errore Frontend */
-.error-message { /* ... invariato ... */ }
-body.error-page .background-elements { display: none; } /* Nasconde sfondo custom se errore */
-body.error-page h1 { /* ... invariato ... */ }
+            if (result.success && result.data) {
+                const data = result.data;
+
+                // Titolo
+                document.title = data.title || 'Magnolia 808 Hub';
+                if (titleElement) titleElement.textContent = data.title || 'MAGNOLIA 808';
+
+                // Logo
+                logoContainer.innerHTML = ''; 
+                if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
+                    const logoFilename = data.logoUrl.trim(); 
+                    const logoImg = document.createElement('img');
+                    logoImg.src = logoFilename; 
+                    logoImg.alt = 'Logo'; 
+                    logoImg.onerror = () => { console.error("Errore caricando logo:", logoFilename); logoContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Logo non trovato</p>'; };
+                    logoContainer.appendChild(logoImg); 
+                    if (titleElement) titleElement.style.marginTop = '0.5em'; 
+                } else {
+                     if (titleElement) titleElement.style.marginTop = '0'; 
+                }
+                
+                // Pulsanti Link
+                linkContainer.innerHTML = ''; 
+                if (data.links && data.links.length > 0) {
+                    data.links.forEach(link => {
+                        const button = document.createElement('a');
+                        button.href = link.url; button.textContent = link.label; 
+                        button.className = 'link-button'; button.target = '_top';
+                        button.style.background = link.color || defaultButtonColor; 
+                        linkContainer.appendChild(button); 
+                    });
+                } else {
+                    linkContainer.innerHTML = '<p>Nessun link attivo al momento.</p>';
+                }
+                
+                if (loadingMessage) loadingMessage.style.display = 'none';
+
+            } else {
+                throw new Error(result.error || 'Errore API.');
+            }
+
+        } catch (error) {
+            console.error('Errore caricamento dati:', error);
+            if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare: ${error.message}</p>`;
+            if (titleElement) titleElement.textContent = 'Errore';
+            document.title = 'Errore';
+            if (loadingMessage) loadingMessage.style.display = 'none';
+            if (loader) loader.style.display = 'none'; 
+            document.body.classList.add('error-page'); 
+        }
+    }
+
+    // --- Esecuzione ---
+    loadData();              // Carica dati dal foglio Google
+    createFloatingImages();  // Crea le immagini di sfondo animate
+});
