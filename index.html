@@ -7,28 +7,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Contenitore per particles.js (ID standard) -->
-    <div id="particles-js"></div> 
+    <!-- Elementi per Effetti Sfondo CSS (Globi) -->
+    <div class="glow-orb orb1"></div> 
+    <div class="glow-orb orb2"></div> 
 
     <!-- Contenuto Principale -->
     <div class="main-content">
-        <div id="logo-container"></div>
+        
+        <div id="logo-container">
+            <!-- Logo verrà inserito qui da JS -->
+        </div>
+
         <h1 id="page-title"></h1> 
+        
         <div class="loader-container" id="loader"> 
            <div class="loader-bar"></div> 
            <span id="percentage-text">0%</span> 
         </div>
+        
         <div class="link-container" id="link-container">
             <p id="loading-message">Caricamento link...</p> 
         </div>
-    </div> 
+
+    </div> <!-- Fine .main-content -->
 
     <!-- Librerie Esterne -->
-    <!-- GSAP (Opzionale, ma lo lasciamo se vuoi usarlo dopo) -->
+    <!-- *** AGGIUNTO GSAP (per animazioni future) *** -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script> 
-    
-    <!-- Libreria particles.js (CARICATA LOCALMENTE!) -->
-    <script src="particles.min.js"></script> 
+    <!-- Rimosso tsParticles per ora, per semplicità -->
     
     <!-- Il nostro script personalizzato (DOPO le librerie) -->
     <script src="script.js"></script> 
