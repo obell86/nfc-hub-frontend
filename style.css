@@ -1,64 +1,49 @@
 /* =================================== */
-/* STYLE.CSS - Party Style v9.4      */
-/* Enhanced Neon Flicker Title       */
+/* STYLE.CSS - Party Style v9.9      */
+/* Based on v9.4 - Added Neon Loader */
+/* & Rounded Neon Buttons            */
 /* =================================== */
 
 /* --- Keyframes --- */
+/* Animazione per il riempimento della BARRA del loader (separata dal testo) */
 @keyframes loading-loop { 0% { width: 0%; } 50% { width: 100%; } 100% { width: 0%; } } 
-@keyframes pulse-intense { 0% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } 50% { transform: scale(1.05); box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); } 100% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 3px 1px rgba(0,0,0,0.3); } }
+
+/* Animazione per testo caricamento "MAGNOLIA" */
+@keyframes loading-text-reveal {
+  0% { max-width: 0; opacity: 0.1; filter: blur(4px); }
+  40% { opacity: 0.8; filter: blur(1px); } 
+  60% { opacity: 0.8; filter: blur(1px); } 
+  100% { max-width: 100%; opacity: 1; filter: blur(0px); }
+}
+
+/* Animazione per il Glow del Pulsante su Hover/Attivo */
+@keyframes pulse-intense { 
+  0%, 100% { 
+    box-shadow: 
+      0 0 8px var(--button-neon-color, #fff), /* Usa colore variabile */
+      inset 0 0 3px 1px rgba(0,0,0,0.5); 
+    transform: scale(1); 
+  } 
+  50% { 
+    box-shadow: 
+      0 0 15px var(--button-neon-color, #fff), 
+      0 0 25px var(--button-neon-color, #fff), 
+      inset 0 0 4px 1px rgba(0,0,0,0.4);
+    transform: scale(1.03); 
+  } 
+}
+
 @keyframes logo-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } } 
 
-/* Nuovo Keyframe per Flicker Neon di Alta Qualità */
+/* Keyframe per Flicker Neon Titolo (come nella v9.4) */
 @keyframes high-quality-flicker {
-  0%, 100% { /* Stato "normale" acceso */
-    text-shadow: 
-      0 0 5px rgba(255, 255, 255, 1),   /* Alone bianco interno */
-      0 0 10px rgba(0, 255, 255, 0.9), /* Glow ciano principale */
-      0 0 20px rgba(0, 255, 255, 0.7),
-      0 0 40px rgba(0, 255, 255, 0.5),
-      0 0 70px rgba(0, 255, 255, 0.3);
-    opacity: 1;
-  }
-  15% { /* Breve calo 1 */
-    text-shadow: 
-      0 0 3px rgba(255, 255, 255, 0.8), 
-      0 0 6px rgba(0, 255, 255, 0.5),
-      0 0 10px rgba(0, 255, 255, 0.3);
-    opacity: 0.8;
-  }
-  30% { /* Torna quasi normale */
-     text-shadow: 
-      0 0 5px rgba(255, 255, 255, 1), 
-      0 0 9px rgba(0, 255, 255, 0.8), 
-      0 0 18px rgba(0, 255, 255, 0.6),
-      0 0 35px rgba(0, 255, 255, 0.4);
-    opacity: 0.95;
-  }
-   42% { /* "Spento" più deciso */
-     text-shadow: 
-       0 0 2px rgba(255, 255, 255, 0.5); /* Solo un filo bianco */
-     opacity: 0.5;
-   }
-   47% { /* Ritorno rapido */
-      text-shadow: 
-      0 0 5px rgba(255, 255, 255, 1),   
-      0 0 10px rgba(0, 255, 255, 0.9), 
-      0 0 20px rgba(0, 255, 255, 0.7),
-      0 0 40px rgba(0, 255, 255, 0.5);
-    opacity: 1;
-   }
-  65% { /* Altro calo leggero */
-    text-shadow: 
-      0 0 4px rgba(255, 255, 255, 0.9), 
-      0 0 8px rgba(0, 255, 255, 0.6);
-    opacity: 0.9;
-  }
-  80% { /* Quasi spento di nuovo */
-     text-shadow: 
-       0 0 3px rgba(255, 255, 255, 0.6);
-     opacity: 0.7;
-  }
-  /* Tra 80% e 100% torna allo stato normale definito al 100% */
+  0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5), 0 0 70px rgba(0, 255, 255, 0.3); opacity: 1; }
+  15% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 6px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3); opacity: 0.8; }
+  30% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 9px rgba(0, 255, 255, 0.8), 0 0 18px rgba(0, 255, 255, 0.6), 0 0 35px rgba(0, 255, 255, 0.4); opacity: 0.95; }
+   42% { text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); opacity: 0.5; }
+   47% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5); opacity: 1; }
+  65% { text-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(0, 255, 255, 0.6); opacity: 0.9; }
+  80% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.6); opacity: 0.7; }
 }
 
 /* --- Stili Generali --- */
@@ -71,8 +56,9 @@ body {
   background-color: black; /* Sfondo nero base */
 } 
 
-/* --- Contenitore particles.js --- */
-#particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+/* Rimosso contenitore #particles-js (se non lo usi) */
+/* Se usi ancora particles.js, rimetti lo stile: */
+/* #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; } */
 
 /* --- Contenuto Principale --- */
 .main-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
@@ -80,32 +66,87 @@ body {
 /* Logo */
 #logo-container img { display: block; max-width: 120px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 1.5em; animation: logo-float 3s ease-in-out infinite; background-color: transparent; }
 
-/* Titolo con Nuovo Flicker Neon */
+/* Titolo con Flicker Neon v9.4 */
 h1 { 
-  font-size: 8vw; /* Dimensione piccola mantenuta */
-  max-width: 95%; line-height: 1.1; 
-  color: #ffffff; /* Testo base bianco brillante */
+  font-size: 8vw; max-width: 95%; line-height: 1.1; color: #ffffff; 
   margin-top: 0.5em; margin-bottom: 1.5em; 
-  /* Applica la nuova animazione flicker */
-  animation: high-quality-flicker 2s linear infinite; /* Durata 2s, aggiustabile */
-  word-wrap: break-word; 
-  font-weight: bold; /* Opzionale: può rendere il neon più pieno */
+  animation: high-quality-flicker 2s linear infinite; 
+  word-wrap: break-word; font-weight: bold; 
 } 
 
-/* Loader */
-.loader-container { position: relative; width: 90%; max-width: 500px; height: 2em; background-color: rgba(51, 51, 51, 0.8); border-radius: 1.2em; overflow: hidden; margin-bottom: 2.5em; border: 1px solid #444; display: block; }
-.loader-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ff00ff, #00ffff); border-radius: 1.2em; animation: loading-loop 3s linear infinite; }
-#percentage-text { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 0.9em; text-shadow: 1px 1px 2px rgba(0,0,0,0.9); z-index: 2; pointer-events: none; }
+/* Loader (Nuovo Stile Testo Neon) */
+.loader-container { 
+  position: relative; width: 90%; max-width: 500px; 
+  height: 2.5em; /* Altezza per testo neon */ 
+  margin-bottom: 3em; 
+  display: flex; justify-content: center; align-items: center;
+  background-color: rgba(15, 15, 15, 0.7); /* Sfondo scuro */
+  border-radius: 1.5em; /* Arrotondato */
+  border: 1px solid rgba(100, 100, 100, 0.5); 
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.6); 
+  overflow: hidden; /* Nasconde la barra che esce */
+  z-index: 1; 
+}
+/* Barra sotto il testo (animazione separata) */
+.loader-bar { 
+  position: absolute; top: 0; left: 0;
+  height: 100%; width: 0%; 
+  background: linear-gradient(90deg, #8A2BE2, #4682B4, #32CD32); /* Viola/Blu/Verde */
+  opacity: 0.5; /* Più tenue */
+  border-radius: 1.5em; 
+  animation: loading-loop 5s linear infinite; /* *** RALLENTATA *** */
+  z-index: 1; /* Sotto il testo */
+}
+/* Stile Testo "MAGNOLIA" Caricamento */
+#loading-text-container {
+  position: relative; z-index: 2; /* Sopra la barra */
+  font-size: 1.5em; /* Dimensione testo */
+  font-weight: bold; color: #ffffff; 
+  letter-spacing: 3px; 
+  /* Effetto Neon Bianco per il testo */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 1), 0 0 12px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
+  overflow: hidden; white-space: nowrap; 
+  display: inline-block; 
+  opacity: 0; max-width: 0; /* Nascosto inizialmente */
+  /* Animazione RIVELAZIONE TESTO (più lenta, loop) */
+  animation: loading-text-reveal 5s linear infinite; 
+}
+/* Rimosso #percentage-text */
+
 
 /* Contenitore Pulsanti */
-.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.2em; margin-top: 1em; width: 100%; max-width: 450px; }
+.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.5em; /* Spazio aumentato */ margin-top: 1em; width: 100%; max-width: 450px; }
 #loading-message, .link-container p { font-size: 1.2em; opacity: 0.7; }
 
-/* Pulsante */
-.link-button { position: relative; display: block; width: 100%; padding: 0.7em 1em; color: white; text-decoration: none; font-size: 1.3em; border-radius: 0.5em; font-weight: bold; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease; box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), inset 0 0 3px 1px rgba(0,0,0,0.4); line-height: 1.3; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); } 
-.link-button:hover, .link-button:active { transform: scale(1.03); box-shadow: 0 0 18px #ff00ff, 0 0 35px #ff00ff, 0 0 45px #00ffff, inset 0 0 4px 1px rgba(0,0,0,0.25); animation: pulse-intense 0.8s infinite; border-color: rgba(255, 255, 255, 0.6); } 
+/* Pulsante (Forma Ovale/Pillola, Bordo Neon Colorato) */
+.link-button { 
+  position: relative; display: block; width: 100%; 
+  padding: 0.9em 1.5em; /* Padding verticale aumentato */
+  background: rgba(20, 20, 20, 0.7); /* Sfondo scuro semi-trasparente */
+  color: white; text-decoration: none; 
+  font-size: 1.3em; 
+  border-radius: 50px; /* Molto arrotondato -> forma a pillola */
+  font-weight: bold; 
+  border: 2px solid; /* Bordo più spesso */
+  /* Colore bordo e ombra gestiti da variabile CSS --button-neon-color */
+  border-color: var(--button-neon-color, rgba(255, 255, 255, 0.5)); 
+  cursor: pointer; 
+  transition: transform 0.2s ease, box-shadow 0.4s ease, border-color 0.4s ease; 
+  /* Ombra glow base che usa il colore del bottone */
+  box-shadow: 0 0 8px var(--button-neon-color, #fff), 
+              inset 0 0 3px 1px rgba(0,0,0,0.5); 
+  line-height: 1.3; 
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6); 
+} 
+.link-button:hover, .link-button:active { 
+  transform: scale(1.03); 
+  border-color: white; /* Bordo bianco luminoso su hover */
+  /* Usa animazione pulse definita sopra, userà le variabili --button-glow-shadow */
+  animation: pulse-intense 1s infinite alternate; 
+} 
 
 /* Stili Errore Frontend */
 .error-message { color: #ff4444; font-weight: bold; margin-top: 2em; border: 1px solid #ff4444; padding: 1em; background-color: rgba(255, 0, 0, 0.1); border-radius: 0.5em; }
-body.error-page #particles-js { display: none; } 
+/* Rimosso riferimento a #particles-js */
 body.error-page h1 { animation: none; text-shadow: none; color: #ff4444; }
