@@ -2,56 +2,34 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport Meta Tag: Fondamentale per il responsive design su mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Titolo iniziale, verrà sovrascritto da JavaScript -->
     <title>Caricamento Hub...</title> 
-    
-    <!-- Collegamento al foglio di stile CSS -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Eventuali prefetch/preload per ottimizzazioni future -->
-    <!-- <link rel="preload" href="style.css" as="style"> -->
-    <!-- <link rel="preload" href="script.js" as="script"> -->
-
 </head>
 <body>
-    <!-- Elementi per gli Effetti di Sfondo (Globi) -->
-    <!-- Questi div sono posizionati assolutamente/fissi dal CSS e stanno dietro il contenuto -->
-    <div class="glow-orb orb1"></div> <!-- Globo Ciano -->
-    <div class="glow-orb orb2"></div> <!-- Globo Magenta -->
+    <!-- Contenitore per particles.js (ID standard) -->
+    <div id="particles-js"></div> 
 
-    <!-- Contenitore Principale del Contenuto -->
-    <!-- Usiamo un contenitore per applicare facilmente z-index e centrare -->
+    <!-- Contenuto Principale -->
     <div class="main-content">
-        
-        <!-- Contenitore per il Logo -->
-        <!-- Il tag <img> verrà inserito qui da JavaScript se un logo è specificato nel foglio -->
         <div id="logo-container"></div>
-
-        <!-- Titolo Principale -->
-        <!-- Il testo verrà inserito qui da JavaScript -->
         <h1 id="page-title"></h1> 
-        
-        <!-- Barra di Caricamento Animata -->
         <div class="loader-container" id="loader"> 
            <div class="loader-bar"></div> 
            <span id="percentage-text">0%</span> 
         </div>
-        
-        <!-- Contenitore per i Pulsanti Dinamici -->
         <div class="link-container" id="link-container">
-            <!-- Messaggio di caricamento iniziale, verrà sostituito dai pulsanti o da un messaggio di errore -->
             <p id="loading-message">Caricamento link...</p> 
         </div>
+    </div> 
 
-    </div> <!-- Fine .main-content -->
-
-    <!-- Script Esterni -->
-    <!-- Libreria tsParticles NON più usata in questa versione, rimosso il link -->
+    <!-- Librerie Esterne -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script> 
     
-    <!-- Il nostro script personalizzato (DEVE essere alla fine del body o con 'defer') -->
+    <!-- Libreria particles.js (CARICATA LOCALMENTE!) -->
+    <script src="particles.min.js"></script> 
+    
+    <!-- Il nostro script personalizzato (DOPO le librerie) -->
     <script src="script.js"></script> 
 
 </body>
