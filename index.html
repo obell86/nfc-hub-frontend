@@ -7,37 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Elementi per Effetti Sfondo CSS (Globi) -->
+    <!-- Elementi Sfondo (Globi) -->
     <div class="glow-orb orb1"></div> 
     <div class="glow-orb orb2"></div> 
 
     <!-- Contenuto Principale -->
     <div class="main-content">
-        
-        <div id="logo-container">
-            <!-- Logo verrà inserito qui da JS -->
-        </div>
-
+        <div id="logo-container"></div>
         <h1 id="page-title"></h1> 
         
+        <!-- Loader Modificato: Contiene solo testo -->
         <div class="loader-container" id="loader"> 
-           <div class="loader-bar"></div> 
-           <span id="percentage-text">0%</span> 
+           <span id="loading-text-container">MAGNOLIA</span> 
         </div>
         
         <div class="link-container" id="link-container">
             <p id="loading-message">Caricamento link...</p> 
         </div>
-
-    </div> <!-- Fine .main-content -->
+    </div> 
 
     <!-- Librerie Esterne -->
-    <!-- *** AGGIUNTO GSAP (per animazioni future) *** -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script> 
-    <!-- Rimosso tsParticles per ora, per semplicità -->
     
-    <!-- Il nostro script personalizzato (DOPO le librerie) -->
+    <!-- Script personalizzato -->
     <script src="script.js"></script> 
-
 </body>
 </html>
