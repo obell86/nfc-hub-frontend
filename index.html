@@ -2,25 +2,57 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport Meta Tag: Fondamentale per il responsive design su mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caricamento...</title> <!-- Verrà aggiornato da JS -->
+    
+    <!-- Titolo iniziale, verrà sovrascritto da JavaScript -->
+    <title>Caricamento Hub...</title> 
+    
+    <!-- Collegamento al foglio di stile CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Eventuali prefetch/preload per ottimizzazioni future -->
+    <!-- <link rel="preload" href="style.css" as="style"> -->
+    <!-- <link rel="preload" href="script.js" as="script"> -->
+
 </head>
 <body>
-    <div id="tsparticles"></div> 
-    <!-- Rimuovi i div per .glow-orb e .sparkle se vuoi sostituirli completamente -->
-    <!-- <div class="glow-orb orb1"></div> -->
-    <!-- <div class="glow-orb orb2"></div> -->
-    <!-- <div class="sparkle-container"> ... </div> -->
-    <!-- Rimuovi anche .shooting-star -->
+    <!-- Elementi per gli Effetti di Sfondo (Globi) -->
+    <!-- Questi div sono posizionati assolutamente/fissi dal CSS e stanno dietro il contenuto -->
+    <div class="glow-orb orb1"></div> <!-- Globo Ciano -->
+    <div class="glow-orb orb2"></div> <!-- Globo Magenta -->
 
-    <div class="main-content"> 
-        <!-- ... resto del contenuto ... -->
-    </div>
+    <!-- Contenitore Principale del Contenuto -->
+    <!-- Usiamo un contenitore per applicare facilmente z-index e centrare -->
+    <div class="main-content">
+        
+        <!-- Contenitore per il Logo -->
+        <!-- Il tag <img> verrà inserito qui da JavaScript se un logo è specificato nel foglio -->
+        <div id="logo-container"></div>
 
-    <!-- *** AGGIUNGI QUESTI SCRIPT PRIMA DEL TUO script.js *** -->
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.10.1/tsparticles.bundle.min.js"></script> 
+        <!-- Titolo Principale -->
+        <!-- Il testo verrà inserito qui da JavaScript -->
+        <h1 id="page-title"></h1> 
+        
+        <!-- Barra di Caricamento Animata -->
+        <div class="loader-container" id="loader"> 
+           <div class="loader-bar"></div> 
+           <span id="percentage-text">0%</span> 
+        </div>
+        
+        <!-- Contenitore per i Pulsanti Dinamici -->
+        <div class="link-container" id="link-container">
+            <!-- Messaggio di caricamento iniziale, verrà sostituito dai pulsanti o da un messaggio di errore -->
+            <p id="loading-message">Caricamento link...</p> 
+        </div>
+
+    </div> <!-- Fine .main-content -->
+
+    <!-- Script Esterni -->
+    <!-- Libreria tsParticles NON più usata in questa versione, rimosso il link -->
     
+    <!-- Il nostro script personalizzato (DEVE essere alla fine del body o con 'defer') -->
     <script src="script.js"></script> 
+
 </body>
 </html>
