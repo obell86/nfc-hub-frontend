@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // API URL (Invariato)
+    // API URL
     const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; 
     const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; 
 
@@ -42,11 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.title = data.title || 'Magnolia 808 Hub';
                 if (titleElement) titleElement.textContent = data.title || 'MAGNOLIA 808';
 
-                // Logo (da filename relativo)
+                // Logo 
                 logoContainer.innerHTML = ''; 
                 if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
                     const logoFilename = data.logoUrl.trim(); 
-                    console.log("Cerco logo:", logoFilename); 
                     const logoImg = document.createElement('img');
                     logoImg.src = logoFilename; 
                     logoImg.alt = 'Logo'; 
@@ -55,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (titleElement) titleElement.style.marginTop = '0.5em'; 
                 } else {
                      if (titleElement) titleElement.style.marginTop = '0'; 
-                     console.log("Nessun logo specificato nel foglio (B6).");
                 }
                 
                 // Pulsanti Link
@@ -89,98 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Inizializzazione particles.js (v2.0.0) ---
-    // Questa funzione viene chiamata globalmente dalla libreria particles.min.js
-    // Usa l'ID 'particles-js' che abbiamo messo nell'HTML
-    
-    // Definisci la configurazione in formato JSON per particles.js v2
+    // --- Inizializzazione particles.js (TEMPORANEAMENTE COMMENTATA) ---
+    /* 
     const particlesConfig = {
-      "particles": {
-        "number": {
-          "value": 25, // Meno particelle se sono immagini
-          "density": {
-            "enable": true,
-            "value_area": 800 // Area più grande per meno densità
-          }
-        },
-        "color": {
-          "value": "#ffffff" // Non usato per immagini, ma richiesto
-        },
-        "shape": {
-          "type": "image", // Tipo immagine
-          "stroke": { // Nessun bordo sulle particelle
-            "width": 0,
-            "color": "#000000"
-          },
-          "polygon": { // Non usato per immagini
-            "nb_sides": 5
-          },
-          "image": { 
-            // !!! ARRAY DI IMMAGINI LOCALI - Assicurati che esistano nel repo! !!!
-            "src": ["lips.png", "lollipop.png", "eye.png", "star-pop.png", "lightning.png"], 
-            "width": 100, // Larghezza originale (la libreria scala)
-            "height": 100 // Altezza originale
-          }
-        },
-        "opacity": {
-          "value": 0.7, // Opacità base
-          "random": true, // Variazione casuale
-          "anim": { // Animazione opacità
-            "enable": true,
-            "speed": 0.8,
-            "opacity_min": 0.2,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 40, // Dimensione base (in px)
-          "random": true, // Dimensione casuale (tra min e value)
-          "anim": { // Animazione dimensione
-            "enable": true,
-            "speed": 3,
-            "size_min": 20, // Dimensione minima
-            "sync": false
-          }
-        },
-        "line_linked": { // Nessuna linea tra le particelle
-          "enable": false,
-        },
-        "move": {
-          "enable": true,
-          "speed": 1.5, // Velocità movimento
-          "direction": "none", // Casuale
-          "random": true,
-          "straight": false,
-          "out_mode": "out", // Escono dallo schermo
-          "bounce": false, // Non rimbalzano tra loro
-          "attract": { // Non si attraggono
-            "enable": false,
-          }
-        }
-      },
-      "interactivity": { // Nessuna interattività mouse
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": false },
-          "onclick": { "enable": false },
-          "resize": true // Si adatta al resize finestra
-        }
-      },
-      "retina_detect": true // Migliora qualità su schermi retina
+      // ... (tutta la configurazione JSON di particles.js che avevamo prima) ...
+      "particles": { 
+         // ...
+         "shape": {
+             "type": "image",
+             "image": {
+                 "src": ["lips.png", "lollipop.png", "eye.png", "star-pop.png", "lightning.png"], // NOMI FILE
+                 "width": 100,
+                 "height": 100
+             }
+             // ...
+         }
+         // ...
+      }
+      // ...
     };
 
-    // Chiama la funzione globale `particlesJS` per inizializzare
-    // Passa l'ID del div e l'oggetto di configurazione
     if (typeof particlesJS !== 'undefined') {
          particlesJS('particles-js', particlesConfig);
          console.log("particles.js inizializzato.");
     } else {
-         console.error("La libreria particlesJS non è stata caricata correttamente! Controlla il tag <script> in index.html.");
-         if (loadingMessage) loadingMessage.textContent = "Errore caricamento effetti.";
-         if (loader) loader.style.display = 'none';
+         console.error("La libreria particlesJS non è stata caricata!");
+         // Potresti mostrare un messaggio di fallback o non fare nulla
     }
+    */
 
-
-    // Avvia il caricamento dei dati dal foglio Google
+    // Avvia solo il caricamento dei dati per ora
     loadData(); 
+    // Non chiamiamo initParticles() qui per il test
 });
