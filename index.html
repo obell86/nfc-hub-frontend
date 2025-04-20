@@ -7,30 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Contenitore per gli effetti di sfondo (se necessari) -->
-    <div class="background-effects">
-         <!-- Sparkles verranno aggiunti qui da JS se necessario, o usa CSS :before/:after -->
-         <div class="shooting-star"></div>
+    <div id="tsparticles"></div> 
+    <!-- Rimuovi i div per .glow-orb e .sparkle se vuoi sostituirli completamente -->
+    <!-- <div class="glow-orb orb1"></div> -->
+    <!-- <div class="glow-orb orb2"></div> -->
+    <!-- <div class="sparkle-container"> ... </div> -->
+    <!-- Rimuovi anche .shooting-star -->
+
+    <div class="main-content"> 
+        <!-- ... resto del contenuto ... -->
     </div>
 
-    <!-- Contenuto Principale -->
-    <div class="main-content">
-        <div id="logo-container">
-            <!-- Il logo verrà inserito qui da JS -->
-        </div>
-        <h1 id="page-title"></h1> <!-- Titolo verrà inserito qui -->
-        
-        <div class="loader-container" id="loader"> <!-- Aggiunto ID al loader -->
-           <div class="loader-bar"></div> 
-           <span id="percentage-text">0%</span> 
-        </div>
-        
-        <div class="link-container" id="link-container">
-            <!-- I pulsanti verranno inseriti qui da JS -->
-            <p id="loading-message">Caricamento link...</p> <!-- Messaggio temporaneo -->
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <!-- *** AGGIUNGI QUESTI SCRIPT PRIMA DEL TUO script.js *** -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.10.1/tsparticles.bundle.min.js"></script> 
+    
+    <script src="script.js"></script> 
 </body>
 </html>
