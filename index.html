@@ -13,23 +13,30 @@
 
     <!-- Contenuto Principale -->
     <div class="main-content">
-        <div id="logo-container"></div>
+        
+        <div id="logo-container">
+            <!-- Logo verrà inserito qui da JS -->
+        </div>
+
         <h1 id="page-title"></h1> 
         
-        <!-- Loader Modificato: Contiene solo testo -->
+        <!-- Loader Standard con Percentuale -->
         <div class="loader-container" id="loader"> 
-           <span id="loading-text-container">MAGNOLIA</span> 
+           <div class="loader-bar"></div> 
+           <span id="percentage-text">0%</span> 
         </div>
         
         <div class="link-container" id="link-container">
             <p id="loading-message">Caricamento link...</p> 
         </div>
-    </div> 
+
+    </div> <!-- Fine .main-content -->
 
     <!-- Librerie Esterne -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script> 
     
-    <!-- Script personalizzato -->
+    <!-- Il nostro script personalizzato -->
     <script src="script.js"></script> 
+
 </body>
 </html>
