@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader');
     const loaderTextElement = document.getElementById('loading-text-container');
     const loaderBarElement = loader ? loader.querySelector('.loader-bar') : null;
-    const footerImageContainer = document.getElementById('footer-image-container'); // Contenitore Immagine Footer
+    const footerImageContainer = document.getElementById('footer-image-container');
 
     async function loadData() {
         if (loadingMessage) loadingMessage.style.display = 'block';
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (titleElement) {
                 titleElement.textContent = data.title;
                 if (data.titleSize) titleElement.style.fontSize = data.titleSize; else titleElement.style.fontSize = '';
-                // if (data.titleFontFamily) titleElement.style.fontFamily = data.titleFontFamily; else titleElement.style.fontFamily = ''; // Se usi font dedicato
+                // if (data.titleFontFamily) titleElement.style.fontFamily = data.titleFontFamily; else titleElement.style.fontFamily = '';
             }
 
             // Loader
@@ -47,34 +47,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else { loader.style.display = 'none'; }
             } else { console.warn("Elemento Loader non trovato."); }
 
-            // Logo
-            logoContainer.innerHTML = '';
-            if (data.logoUrl) { /* ... crea immagine logo ... */ } else { console.log("Nessun logo."); }
+            // *** LOGO - CODICE CORRETTO PER NOMI FILE ***
+            logoContainer.innerHTML = ''; // Pulisci prima
+            // Controlla se l'URL del logo (da B6) è valido
+            if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
+                const logoFilename = data.logoUrl.trim(); // Prende il valore da B6 (es. "miologo.png")
+                console.log("Cerco logo:", logoFilename);
+                const logoImg = document.createElement('img');
+                logoImg.src = logoFilename; // ---> USA IL NOME FILE DA B6
+                logoImg.alt = 'Logo'; // Alt generico per il logo
+                logoImg.onerror = () => {
+                    console.error("Errore caricando logo:", logoFilename);
+                    logoContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Logo non trovato</p>';
+                };
+                logoContainer.appendChild(logoImg); // Aggiunge l'immagine
+            } else {
+                console.log("Nessun logo specificato (B6 vuoto).");
+            }
+            // *** FINE CODICE LOGO ***
 
             // Pulsanti Link
-            linkContainer.innerHTML = '';
+            linkContainer.innerHTML = ''; // Pulisci messaggio caricamento
             if (data.links && data.links.length > 0) {
-                data.links.forEach(link => { /* ... crea pulsanti ... */
-                    const button = document.createElement('a'); /*...*/ button.href = link.url; button.textContent = link.label; button.className = 'link-button'; button.target = '_top'; button.style.background = link.color || defaultButtonColor;
+                data.links.forEach(link => {
+                    const button = document.createElement('a');
+                    button.href = link.url; button.textContent = link.label; button.className = 'link-button'; button.target = '_top';
+                    button.style.background = link.color || defaultButtonColor;
                     if (data.buttonFontSize) button.style.fontSize = data.buttonFontSize; else button.style.fontSize = '';
                     if (data.buttonPadding) button.style.padding = data.buttonPadding; else button.style.padding = '';
-                    linkContainer.appendChild(button); });
-                console.log("Creati", data.links.length, "link.");
+                    linkContainer.appendChild(button);
+                });
+                console.log("Creati", data.links.length, "pulsanti link.");
             } else { linkContainer.innerHTML = '<p>Nessun link attivo.</p>'; }
 
-            // Immagine Footer (con Alt da D5, URL da D6)
+            // *** IMMAGINE FOOTER - CODICE CORRETTO PER NOMI FILE ***
             if (footerImageContainer) {
                 footerImageContainer.innerHTML = '';
-                if (data.footerImageUrl) { // Controlla solo l'URL
-                    const imageUrl = data.footerImageUrl;
-                    const imageAlt = data.footerImageAlt || 'Immagine Footer'; // Usa D5 o default
+                if (data.footerImageUrl && typeof data.footerImageUrl === 'string' && data.footerImageUrl.trim() !== '') { // Controlla URL da D6
+                    const imageUrl = data.footerImageUrl.trim(); // Prende il valore da D6 (es. "footer.jpg")
+                    const imageAlt = (data.footerImageAlt && typeof data.footerImageAlt === 'string' && data.footerImageAlt.trim() !== '') ? data.footerImageAlt.trim() : 'Immagine Footer'; // Usa D5 o default
                     console.log("Cerco immagine footer:", imageUrl, "Alt:", imageAlt);
                     const footerImg = document.createElement('img');
-                    footerImg.src = imageUrl; footerImg.alt = imageAlt;
-                    footerImg.onerror = () => { console.error("Errore img footer:", imageUrl); footerImageContainer.innerHTML = '<p>Immagine non trovata</p>'; };
+                    footerImg.src = imageUrl; // ---> USA IL NOME FILE DA D6
+                    footerImg.alt = imageAlt;
+                    footerImg.onerror = () => {
+                        console.error("Errore img footer:", imageUrl);
+                        footerImageContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Immagine non trovata</p>';
+                    };
                     footerImageContainer.appendChild(footerImg);
-                } else { console.log("Nessun URL immagine footer."); }
+                } else { console.log("Nessun URL immagine footer specificato (D6 vuoto)."); }
             } else { console.warn("#footer-image-container non trovato."); }
+            // *** FINE CODICE FOOTER ***
+
 
             // Nascondi Messaggio Testo alla fine
             if (loadingMessage) loadingMessage.style.display = 'none';
