@@ -57,8 +57,6 @@ body {
   background-color: black; /* Sfondo nero base */
 }
 
-/* Rimosso contenitore #particles-js (se non lo usi) */
-
 /* --- Contenuto Principale --- */
 .main-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
 
@@ -67,7 +65,7 @@ body {
 
 /* Titolo con Flicker Neon v9.4 */
 h1 {
-  /* font-size: 8vw; */ /* <<< MODIFICATO: Dimensione ora controllata da JS */
+  /* font-size: 8vw; */ /* <<< COMMENTATO: Dimensione ora controllata da JS */
   max-width: 95%; line-height: 1.1; color: #ffffff;
   margin-top: 0.5em; margin-bottom: 1.5em;
   animation: high-quality-flicker 2s linear infinite;
@@ -79,7 +77,7 @@ h1 {
   position: relative; width: 90%; max-width: 500px;
   height: 2.5em; /* Altezza base, può adattarsi al font size */
   margin-bottom: 3em;
-  /* display: flex; */ /* <<< MODIFICATO: Ora gestito da JS (flex o none) */
+  /* display: flex; */ /* <<< COMMENTATO: Ora gestito da JS (flex o none) */
   justify-content: center; align-items: center;
   background-color: rgba(15, 15, 15, 0.7); /* Sfondo scuro */
   border-radius: 1.5em; /* Arrotondato */
@@ -92,16 +90,16 @@ h1 {
 .loader-bar {
   position: absolute; top: 0; left: 0;
   height: 100%; width: 0%;
-  /* background: linear-gradient(90deg, #8A2BE2, #4682B4, #32CD32); */ /* <<< MODIFICATO: Colore ora controllato da JS */
+  /* background: linear-gradient(90deg, #8A2BE2, #4682B4, #32CD32); */ /* <<< COMMENTATO: Colore ora controllato da JS */
   opacity: 0.5; /* Più tenue */
   border-radius: 1.5em;
-  animation: loading-loop 5s linear infinite; /* *** RALLENTATA *** */
+  animation: loading-loop 5s linear infinite;
   z-index: 1; /* Sotto il testo */
 }
 /* Stile Testo "MAGNOLIA" Caricamento */
 #loading-text-container {
   position: relative; z-index: 2; /* Sopra la barra */
-  /* font-size: 1.5em; */ /* <<< MODIFICATO: Dimensione ora controllata da JS */
+  /* font-size: 1.5em; */ /* <<< COMMENTATO: Dimensione ora controllata da JS */
   font-weight: bold; color: #ffffff;
   letter-spacing: 3px;
   /* Effetto Neon Bianco per il testo */
@@ -114,16 +112,16 @@ h1 {
 }
 
 /* Contenitore Pulsanti */
-.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.5em; /* Spazio aumentato */ margin-top: 1em; width: 100%; max-width: 450px; }
+.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.5em; margin-top: 1em; width: 100%; max-width: 450px; }
 #loading-message, .link-container p { font-size: 1.2em; opacity: 0.7; }
 
 /* Pulsante (Forma Ovale/Pillola, Bordo Neon Colorato) */
 .link-button {
   position: relative; display: block; width: 100%;
-  /* padding: 0.9em 1.5em; */ /* <<< MODIFICATO: Padding ora controllato da JS */
-  /* background: rgba(20, 20, 20, 0.7); */ /* <<< RIMOSSO/COMMENTATO: Background ora impostato da JS */
+  /* padding: 0.9em 1.5em; */ /* <<< COMMENTATO: Padding ora controllato da JS */
+  /* background: rgba(20, 20, 20, 0.7); */ /* <<< COMMENTATO: Background ora impostato da JS */
   color: white; text-decoration: none;
-  /* font-size: 1.3em; */ /* <<< MODIFICATO: Dimensione ora controllata da JS */
+  /* font-size: 1.3em; */ /* <<< COMMENTATO: Dimensione ora controllata da JS */
   border-radius: 50px; /* Molto arrotondato -> forma a pillola */
   font-weight: bold;
   border: 2px solid; /* Bordo più spesso */
@@ -142,7 +140,7 @@ h1 {
 .link-button:hover, .link-button:active {
   transform: scale(1.03);
   border-color: white; /* Bordo bianco luminoso su hover */
-  /* Usa animazione pulse definita sopra, userà le variabili --button-glow-shadow */
+  /* Usa animazione pulse definita sopra */
   animation: pulse-intense 1s infinite alternate;
 }
 
