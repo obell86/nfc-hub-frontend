@@ -1,20 +1,52 @@
 /* =================================== */
-/* STYLE.CSS - Party Style v9.9+       */
-/* Based on v9.4 - Added Neon Loader */
-/* & Rounded Neon Buttons            */
-/* Updated for Google Sheet Config   */
+/* STYLE.CSS - Party Style v9.9++      */
+/* Config: Titolo(size,font), Loader(show,txt,color,size,width,speed), Bottoni(font,pad) */
+/* Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) */
 /* =================================== */
 
 /* --- Keyframes --- */
-/* Animazione per il riempimento della BARRA del loader (separata dal testo) */
-@keyframes loading-loop { 0% { width: 0%; } 50% { width: 100%; } 100% { width: 0%; } }
 
-/* Animazione per testo caricamento "MAGNOLIA" */
-@keyframes loading-text-reveal {
-  0% { max-width: 0; opacity: 0.1; filter: blur(4px); }
-  40% { opacity: 0.8; filter: blur(1px); }
-  60% { opacity: 0.8; filter: blur(1px); }
-  100% { max-width: 100%; opacity: 1; filter: blur(0px); }
+/* Animazione per il riempimento della BARRA del loader */
+@keyframes loading-loop {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}
+
+/* *** NUOVA ANIMAZIONE FLICKER "OLD BAR" PER TESTO LOADER *** */
+@keyframes old-bar-flicker {
+  0%, 100% { /* Stato "Acceso" Pieno */
+    opacity: 1;
+    /* Ombra neon definita - Meno blur rispetto al titolo */
+    text-shadow:
+      0 0 2px #fff,
+      0 0 5px #fff,
+      0 0 8px #0ff, /* Ciano/Acqua per il colore neon */
+      0 0 12px #0ff,
+      0 0 15px #0ff;
+  }
+  50% { /* Stato "Fioco" */
+    opacity: 0.6;
+    text-shadow:
+      0 0 2px rgba(255, 255, 255, 0.7),
+      0 0 4px rgba(0, 255, 255, 0.5), /* Glow ridotto */
+      0 0 8px rgba(0, 255, 255, 0.3);
+  }
+  /* Aggiungiamo intermittenze più rapide e irregolari */
+  5% { opacity: 0.7; }
+  8% { opacity: 1; } /* Breve ritorno */
+  15% { opacity: 0.4; /* Calo deciso */
+     text-shadow: 0 0 2px rgba(0, 255, 255, 0.3); /* Quasi spento */
+  }
+  18% { opacity: 1; } /* Ritorno rapido */
+  30% { opacity: 0.8; }
+  40% { opacity: 1; }
+  60% { opacity: 0.5; }
+  63% { opacity: 1; }
+  75% { opacity: 0.7; }
+  85% { opacity: 1; }
+  92% { opacity: 0.6; }
+  95% { opacity: 1; }
 }
 
 /* Animazione per il Glow del Pulsante su Hover/Attivo */
@@ -34,9 +66,14 @@
   }
 }
 
-@keyframes logo-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+/* Animazione Float Logo */
+@keyframes logo-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
 
-/* Keyframe per Flicker Neon Titolo (come nella v9.4) */
+/* Keyframe per Flicker Neon Titolo H1 */
 @keyframes high-quality-flicker {
   0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5), 0 0 70px rgba(0, 255, 255, 0.3); opacity: 1; }
   15% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 6px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3); opacity: 0.8; }
@@ -48,102 +85,162 @@
 }
 
 /* --- Stili Generali --- */
-html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 body {
-  position: relative; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box; padding: 5vw; text-align: center; color: white;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  min-height: 100vh; margin: 0; overflow: hidden;
+  position: relative;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  padding: 5vw;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
   background-color: black; /* Sfondo nero base */
 }
 
 /* --- Contenuto Principale --- */
-.main-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.main-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
 /* Logo */
-#logo-container img { display: block; max-width: 120px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 1.5em; animation: logo-float 3s ease-in-out infinite; background-color: transparent; }
-
-/* Titolo con Flicker Neon v9.4 */
-h1 {
-  /* font-size: 8vw; */ /* <<< COMMENTATO: Dimensione ora controllata da JS */
-  max-width: 95%; line-height: 1.1; color: #ffffff;
-  margin-top: 0.5em; margin-bottom: 1.5em;
-  animation: high-quality-flicker 2s linear infinite;
-  word-wrap: break-word; font-weight: bold;
+#logo-container img {
+  display: block;
+  max-width: 120px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5em;
+  animation: logo-float 3s ease-in-out infinite;
+  background-color: transparent;
 }
 
-/* Loader (Nuovo Stile Testo Neon) */
+/* Titolo H1 */
+h1 {
+  /* font-size: controllato da JS */
+  /* font-family: controllato da JS */
+  max-width: 95%;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+  animation: high-quality-flicker 2s linear infinite;
+  word-wrap: break-word;
+  font-weight: bold;
+}
+
+/* Loader */
 .loader-container {
-  position: relative; width: 90%; max-width: 500px;
-  height: 2.5em; /* Altezza base, può adattarsi al font size */
+  position: relative;
+  /* width: controllato da JS */
+  /* height: controllato da JS (se implementato) */
   margin-bottom: 3em;
-  /* display: flex; */ /* <<< COMMENTATO: Ora gestito da JS (flex o none) */
-  justify-content: center; align-items: center;
-  background-color: rgba(15, 15, 15, 0.7); /* Sfondo scuro */
-  border-radius: 1.5em; /* Arrotondato */
+  /* display: gestito da JS */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(15, 15, 15, 0.7);
+  border-radius: 1.5em;
   border: 1px solid rgba(100, 100, 100, 0.5);
   box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
-  overflow: hidden; /* Nasconde la barra che esce */
+  overflow: hidden;
   z-index: 1;
 }
-/* Barra sotto il testo (animazione separata) */
+/* Barra sotto il testo */
 .loader-bar {
   position: absolute; top: 0; left: 0;
   height: 100%; width: 0%;
-  /* background: linear-gradient(90deg, #8A2BE2, #4682B4, #32CD32); */ /* <<< COMMENTATO: Colore ora controllato da JS */
-  opacity: 0.5; /* Più tenue */
+  /* background: gestito da JS */
+  opacity: 0.5;
   border-radius: 1.5em;
-  animation: loading-loop 5s linear infinite;
-  z-index: 1; /* Sotto il testo */
+  /* animation-duration: controllato da JS */
+  animation: loading-loop linear infinite; /* Nome animazione */
+  z-index: 1;
 }
-/* Stile Testo "MAGNOLIA" Caricamento */
+/* Testo Caricamento (con effetto Old Bar) */
 #loading-text-container {
-  position: relative; z-index: 2; /* Sopra la barra */
-  /* font-size: 1.5em; */ /* COMMENTATO: Dimensione controllata da JS */
-  font-weight: bold; color: #ffffff;
+  position: relative; z-index: 2;
+  /* font-size: controllato da JS */
+  font-weight: bold;
+  color: #ffffff; /* Colore base */
   letter-spacing: 3px;
-  /* Effetto Neon Bianco per il testo */
-  text-shadow: 0 0 6px rgba(255, 255, 255, 1), 0 0 12px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
+  /* Stile base per text-shadow (sovrascritto da animazione) */
+  text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #0ff, 0 0 12px #0ff, 0 0 15px #0ff;
   overflow: hidden; white-space: nowrap;
   display: inline-block;
-  /* opacity: 0; */   /* <<< COMMENTA O RIMUOVI QUESTA RIGA */
-  /* max-width: 0; */ /* <<< COMMENTA O RIMUOVI QUESTA RIGA */
-  /* Animazione RIVELAZIONE TESTO (più lenta, loop) */
-  animation: loading-text-reveal 5s linear infinite;
+  /* Applica l'animazione Old Bar Flicker */
+  animation: old-bar-flicker 2.5s linear infinite;
 }
-/* Contenitore Pulsanti */
-.link-container { display: flex; flex-direction: column; align-items: center; gap: 1.5em; margin-top: 1em; width: 100%; max-width: 450px; }
-#loading-message, .link-container p { font-size: 1.2em; opacity: 0.7; }
 
-/* Pulsante (Forma Ovale/Pillola, Bordo Neon Colorato) */
+/* Contenitore Pulsanti */
+.link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+  margin-top: 1em;
+  width: 100%;
+  max-width: 450px;
+}
+#loading-message, .link-container p {
+  font-size: 1.2em;
+  opacity: 0.7;
+}
+
+/* Pulsante Link */
 .link-button {
-  position: relative; display: block; width: 100%;
-  /* padding: 0.9em 1.5em; */ /* <<< COMMENTATO: Padding ora controllato da JS */
-  /* background: rgba(20, 20, 20, 0.7); */ /* <<< COMMENTATO: Background ora impostato da JS */
-  color: white; text-decoration: none;
-  /* font-size: 1.3em; */ /* <<< COMMENTATO: Dimensione ora controllata da JS */
-  border-radius: 50px; /* Molto arrotondato -> forma a pillola */
+  position: relative;
+  display: block;
+  width: 100%;
+  /* padding: controllato da JS */
+  /* background: controllato da JS */
+  color: white;
+  text-decoration: none;
+  /* font-size: controllato da JS */
+  border-radius: 50px; /* Forma a pillola */
   font-weight: bold;
-  border: 2px solid; /* Bordo più spesso */
-  /* Colore bordo e ombra gestiti da variabile CSS --button-neon-color */
-  border-color: var(--button-neon-color, rgba(255, 255, 255, 0.5));
+  border: 2px solid;
+  border-color: var(--button-neon-color, rgba(255, 255, 255, 0.5)); /* Usa variabile per colore neon */
   cursor: pointer;
-  /* Aggiunta transizione per background per cambio colore più morbido */
   transition: transform 0.2s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.3s ease;
-  /* Ombra glow base che usa il colore del bottone */
-  box-shadow: 0 0 8px var(--button-neon-color, #fff),
+  box-shadow: 0 0 8px var(--button-neon-color, #fff), /* Usa variabile per colore neon */
               inset 0 0 3px 1px rgba(0,0,0,0.5);
   line-height: 1.3;
-  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
 }
 .link-button:hover, .link-button:active {
   transform: scale(1.03);
-  border-color: white; /* Bordo bianco luminoso su hover */
-  /* Usa animazione pulse definita sopra */
+  border-color: white;
   animation: pulse-intense 1s infinite alternate;
 }
 
 /* Stili Errore Frontend */
-.error-message { color: #ff4444; font-weight: bold; margin-top: 2em; border: 1px solid #ff4444; padding: 1em; background-color: rgba(255, 0, 0, 0.1); border-radius: 0.5em; }
-body.error-page h1 { animation: none; text-shadow: none; color: #ff4444; }
+.error-message {
+  color: #ff4444;
+  font-weight: bold;
+  margin-top: 2em;
+  border: 1px solid #ff4444;
+  padding: 1em;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 0.5em;
+}
+body.error-page h1 {
+  animation: none;
+  text-shadow: none;
+  color: #ff4444;
+}
