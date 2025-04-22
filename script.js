@@ -124,15 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Nascondi messaggio di caricamento testuale ALLA FINE
             if (loadingMessage) loadingMessage.style.display = 'none';
 
-            // Nascondi il loader grafico alla fine (se era stato mostrato)
-            // La logica del setTimeout rimane valida per nasconderlo DOPO il caricamento
-            if (loader && data.showLoader !== false) {
-                 setTimeout(() => {
-                      if (loader) loader.style.display = 'none';
-                      console.log("Loader nascosto dopo caricamento completato.");
-                 }, 500); // Delay per far vedere l'ultimo stato
-            }
-
         } catch (error) {
             console.error('ERRORE FINALE nel caricamento dati:', error);
             if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare: ${error.message}</p>`;
