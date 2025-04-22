@@ -62,82 +62,87 @@ body { position: relative; font-family: "Segoe UI", Roboto, Helvetica, Arial, sa
 /* Titolo H1 */
 h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height: 1.1; color: #ffffff; margin-top: .5em; margin-bottom: 1.5em; animation: high-quality-flicker 2s linear infinite; word-wrap: break-word; font-weight: bold; }
 
-/* *** STILI COUNTDOWN TIMER - SUPER SEMPLIFICATI PER TEST *** */
+/* *** STILI COUNTDOWN TIMER - NEON RIVEDUTO E COMPATTO *** */
 #countdown-container {
   margin-top: 1.5em;
   margin-bottom: 2.5em;
   width: 100%;
-  max-width: 450px;
-  padding: 0.5em 0.5em;
+  max-width: 450px; /* Puoi ridurre anche questo se necessario es. 400px */
+  padding: 0.5em 0.3em; /* Ridotto padding laterale ulteriormente */
   box-sizing: border-box;
-  border: 1px dashed red; /* BORDO ROSSO PER VEDERLO */
 }
 
 #countdown-label {
-  font-size: 1rem; /* Dimensione fissa semplice */
-  opacity: 1;
-  margin-bottom: 0.5em;
+  font-size: clamp(0.8rem, 2.5vw, 1rem); /* Ancora più piccolo */
+  opacity: 0.8;
+  margin-bottom: 0.4em;
   display: block;
-  color: white; /* Bianco semplice */
-  letter-spacing: normal;
+  color: #ccc;
+  letter-spacing: 0.5px;
+  white-space: normal; /* Permetti all'etichetta di andare a capo */
 }
 
 #countdown-timer {
-  font-family: 'Courier New', Courier, monospace; /* Font standard */
-  font-size: 2rem; /* Dimensione fissa semplice */
-  font-weight: normal; /* Normale */
-  color: white; /* Bianco semplice */
-  text-shadow: none; /* NESSUNA OMBRA */
-  letter-spacing: normal; /* Normale */
+  font-family: 'Orbitron', 'Courier New', Courier, monospace;
+  /* Ridotto ancora un po' il font size, specialmente il vw */
+  font-size: clamp(1.5rem, 5.5vw, 2.4rem); /* <<< RIDOTTO */
+  font-weight: bold;
+  color: #0ff;
+  text-shadow: /* Glow leggermente più sottile */
+    0 0 2px rgba(255, 255, 255, 0.6),
+    0 0 5px #0ff,
+    0 0 8px #0ff,
+    0 0 12px rgba(0, 255, 255, 0.5);
+  letter-spacing: 1.5px; /* <<< RIDOTTO MOLTO */
   line-height: 1.2;
-  white-space: normal; /* Permetti di andare a capo se necessario */
-  overflow: visible; /* Mostra se esce */
-  text-overflow: clip;
-  width: auto; /* Lascia che si adatti */
-  border: 1px dashed lime; /* BORDO VERDE PER VEDERLO */
+  white-space: nowrap; /* Manteniamo per ora */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center; /* Centra il testo nel contenitore */
 }
 
 /* Stile per gli span numerici (00) */
 #countdown-timer span {
-  display: inline; /* Prova inline invece di inline-block */
-  padding: 0;
+  display: inline-block;
+  padding: 0; /* Rimosso padding extra tra cifre dello stesso numero */
 }
 
-/* Separatori ':' tra ore, minuti, secondi */
+/* Separatori ':' */
 #countdown-timer span#hours::before,
 #countdown-timer span#minutes::before,
 #countdown-timer span#seconds::before {
    content: ':';
-   color: white; /* Bianco */
-   padding: 0 0.1em; /* Meno spazio */
-   font-size: 1em; /* Stessa dimensione */
-   vertical-align: baseline;
+   color: rgba(0, 255, 255, 0.4);
+   padding: 0 0.15em; /* <<< RIDOTTO PADDING SEPARATORE */
+   font-size: 0.7em; /* <<< RIDOTTO DIMENSIONE SEPARATORE */
+   vertical-align: middle;
    text-shadow: none;
 }
-/* Lettere d,h,m,s dopo i numeri */
+/* Lettere d,h,m,s */
 #countdown-timer span#days::after,
 #countdown-timer span#hours::after,
 #countdown-timer span#minutes::after,
 #countdown-timer span#seconds::after {
    content: attr(id);
-   font-size: 0.8em; /* Più piccolo */
-   color: white; /* Bianco */
+   font-size: 0.4em; /* <<< RESO ANCORA PIÙ PICCOLO */
+   color: rgba(0, 255, 255, 0.6);
    text-transform: lowercase;
-   vertical-align: baseline;
-   padding-left: 0.1em; /* Meno spazio */
+   vertical-align: middle;
+   padding-left: 0.1em; /* <<< RIDOTTO PADDING LETTERE */
    text-shadow: none;
-   letter-spacing: normal;
+   letter-spacing: 0.5px;
 }
 
 
 #countdown-message {
-  font-size: 1.2rem; /* Semplice */
+  font-size: clamp(1.1rem, 4.5vw, 1.4rem);
   font-weight: bold;
-  color: yellow; /* Giallo semplice */
-  text-shadow: none;
+  color: #ffdf00;
+  text-shadow: 0 0 5px #ffdf00, 0 0 10px rgba(255, 223, 0, 0.5);
   margin-top: 0.7em;
 }
-
 /* Loader */
 .loader-container { position: relative; margin-bottom: 3em; justify-content: center; align-items: center; background-color: rgba(15, 15, 15, .7); border-radius: 1.5em; border: 1px solid rgba(100, 100, 100, .5); box-shadow: inset 0 0 8px rgba(0, 0, 0, .6); overflow: hidden; z-index: 1; } /* width, display gestiti da JS */
 .loader-bar { position: absolute; top: 0; left: 0; height: 100%; width: 0; opacity: .5; border-radius: 1.5em; animation: loading-loop linear infinite; z-index: 1; } /* background, animation-duration gestiti da JS */
