@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caricamento...</title>
-    <!-- Aggiungi qui eventuali link a Google Fonts se necessario -->
+
+    <!-- *** AGGIUNGI QUESTI LINK PER ORBITRON *** -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <!-- *** FINE LINK FONT *** -->
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ... Resto del body invariato ... -->
     <div class="background-effects">
          <div class="shooting-star"></div>
     </div>
@@ -16,18 +23,16 @@
         <div id="logo-container"></div>
         <h1 id="page-title"></h1>
 
-        <!-- *** BLOCCO COUNTDOWN TIMER AGGIUNTO *** -->
-        <div id="countdown-container" style="display: none;"> <!-- Nascosto inizialmente -->
-            <p id="countdown-label"></p> <!-- Etichetta opzionale (da E3) -->
+        <div id="countdown-container" style="display: none;">
+            <p id="countdown-label"></p>
             <div id="countdown-timer">
-                 <span id="days">00</span>d
-                 <span id="hours">00</span>h
-                 <span id="minutes">00</span>m
-                 <span id="seconds">00</span>s
+                 <span id="days">00</span>
+                 <span id="hours">00</span>
+                 <span id="minutes">00</span>
+                 <span id="seconds">00</span>
             </div>
-             <p id="countdown-message" style="display: none;"></p> <!-- Messaggio alla fine -->
+             <p id="countdown-message" style="display: none;"></p>
         </div>
-        <!-- *** FINE BLOCCO COUNTDOWN *** -->
 
         <div class="loader-container" id="loader" style="display: none;">
            <div class="loader-bar"></div>
@@ -36,7 +41,6 @@
         <div class="link-container" id="link-container">
             <p id="loading-message">Caricamento link...</p>
         </div>
-        <!-- Contenitore per l'immagine footer -->
         <div id="footer-image-container"></div>
     </div>
 
