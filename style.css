@@ -1,253 +1,203 @@
-/* =================================== /
-/ STYLE.CSS - Party Style v9.9++      /
-/ Config: Titolo(size,font), Loader(show,txt,color,size,width,speed), Bottoni(font,pad) /
-/ Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) /
-/ + Footer Image /
-/ FIX: Abilitato scroll per contenuto lungo /
-/ FIX: Rimosso sfondo forzato contenitori immagini /
-/ =================================== */
-/* --- Keyframes --- */
-/* Animazione per il riempimento della BARRA del loader */
-@keyframes loading-loop {
-0% { width: 0%; }
-50% { width: 100%; }
-100% { width: 0%; }
-}
-/* *** NUOVA ANIMAZIONE FLICKER "OLD BAR" PER TESTO LOADER *** /
-@keyframes old-bar-flicker {
-0%, 100% { / Stato "Acceso" Pieno /
-opacity: 1;
-/ Ombra neon definita - Meno blur rispetto al titolo /
-text-shadow:
-0 0 2px #fff,
-0 0 5px #fff,
-0 0 8px #0ff, / Ciano/Acqua per il colore neon /
-0 0 12px #0ff,
-0 0 15px #0ff;
-}
-50% { / Stato "Fioco" /
-opacity: 0.6;
-text-shadow:
-0 0 2px rgba(255, 255, 255, 0.7),
-0 0 4px rgba(0, 255, 255, 0.5), / Glow ridotto /
-0 0 8px rgba(0, 255, 255, 0.3);
-}
-/ Aggiungiamo intermittenze più rapide e irregolari /
-5% { opacity: 0.7; }
-8% { opacity: 1; } / Breve ritorno /
-15% { opacity: 0.4; / Calo deciso /
-text-shadow: 0 0 2px rgba(0, 255, 255, 0.3); / Quasi spento /
-}
-18% { opacity: 1; } / Ritorno rapido */
-30% { opacity: 0.8; }
-40% { opacity: 1; }
-60% { opacity: 0.5; }
-63% { opacity: 1; }
-75% { opacity: 0.7; }
-85% { opacity: 1; }
-92% { opacity: 0.6; }
-95% { opacity: 1; }
-}
-/* Animazione per il Glow del Pulsante su Hover/Attivo /
-@keyframes pulse-intense {
-0%, 100% {
-box-shadow:
-0 0 8px var(--button-neon-color, #fff), / Usa colore variabile */
-inset 0 0 3px 1px rgba(0,0,0,0.5);
-transform: scale(1);
-}
-50% {
-box-shadow:
-0 0 15px var(--button-neon-color, #fff),
-0 0 25px var(--button-neon-color, #fff),
-inset 0 0 4px 1px rgba(0,0,0,0.4);
-transform: scale(1.03);
-}
-}
-/* Animazione Float Logo */
-@keyframes logo-float {
-0% { transform: translateY(0px); }
-50% { transform: translateY(-10px); }
-100% { transform: translateY(0px); }
-}
-/* Keyframe per Flicker Neon Titolo H1 */
-@keyframes high-quality-flicker {
-0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5), 0 0 70px rgba(0, 255, 255, 0.3); opacity: 1; }
-15% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 6px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3); opacity: 0.8; }
-30% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 9px rgba(0, 255, 255, 0.8), 0 0 18px rgba(0, 255, 255, 0.6), 0 0 35px rgba(0, 255, 255, 0.4); opacity: 0.95; }
-42% { text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); opacity: 0.5; }
-47% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5); opacity: 1; }
-65% { text-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(0, 255, 255, 0.6); opacity: 0.9; }
-80% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.6); opacity: 0.7; }
-}
-/* --- Stili Generali --- /
-html {
-font-size: 16px;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-}
-body {
-position: relative;
-font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-box-sizing: border-box;
-padding: 5vw;
-text-align: center;
-color: white;
-display: flex;
-flex-direction: column;
-justify-content: center; / Puoi valutare se commentare anche questo se il contenuto è molto lungo /
-align-items: center;
-min-height: 100vh;
-margin: 0;
-/ overflow: hidden; / / Commentato per scroll /
-background-color: black; / Sfondo nero base */
-}
-/* --- Contenuto Principale --- */
-.main-content {
-position: relative;
-z-index: 1;
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 100%;
-}
-/* Logo /
-#logo-container {
-/ background-color: black; / / <<< RIMOSSO/COMMENTATO /
-}
-#logo-container img {
-display: block;
-max-width: 120px;
-height: auto;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 1.5em;
-animation: logo-float 3s ease-in-out infinite;
-/ Rimosso background-color: transparent; se presente */
-}
-/* Titolo H1 /
-h1 {
-/ font-size: controllato da JS /
-/ font-family: controllato da JS (se implementato) */
-max-width: 95%;
-line-height: 1.1;
-color: #ffffff;
-margin-top: 0.5em;
-margin-bottom: 1.5em;
-animation: high-quality-flicker 2s linear infinite;
-word-wrap: break-word;
-font-weight: bold;
-}
-/* Loader /
-.loader-container {
-position: relative;
-/ width: controllato da JS /
-/ height: controllato da JS (se implementato) /
-margin-bottom: 3em;
-/ display: gestito da JS /
-justify-content: center;
-align-items: center;
-background-color: rgba(15, 15, 15, 0.7);
-border-radius: 1.5em;
-border: 1px solid rgba(100, 100, 100, 0.5);
-box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
-overflow: hidden;
-z-index: 1;
-}
-/ Barra sotto il testo /
-.loader-bar {
-position: absolute; top: 0; left: 0;
-height: 100%; width: 0%;
-/ background: gestito da JS /
-opacity: 0.5;
-border-radius: 1.5em;
-/ animation-duration: controllato da JS /
-animation: loading-loop linear infinite; / Nome animazione /
-z-index: 1;
-}
-/ Testo Caricamento (con effetto Old Bar) /
-#loading-text-container {
-position: relative; z-index: 2;
-/ font-size: controllato da JS /
-font-weight: bold;
-color: #ffffff; / Colore base /
-letter-spacing: 3px;
-/ Stile base per text-shadow (sovrascritto da animazione) /
-text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #0ff, 0 0 12px #0ff, 0 0 15px #0ff;
-overflow: hidden; white-space: nowrap;
-display: inline-block;
-/ Applica l'animazione Old Bar Flicker */
-animation: old-bar-flicker 2.5s linear infinite;
-}
-/* Contenitore Pulsanti */
-.link-container {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 1.5em;
-margin-top: 1em;
-width: 100%;
-max-width: 450px;
-}
-#loading-message, .link-container p {
-font-size: 1.2em;
-opacity: 0.7;
-}
-/* Pulsante Link /
-.link-button {
-position: relative;
-display: block;
-width: 100%;
-/ padding: controllato da JS /
-/ background: controllato da JS /
-color: white;
-text-decoration: none;
-/ font-size: controllato da JS /
-border-radius: 50px; / Forma a pillola /
-font-weight: bold;
-border: 2px solid;
-border-color: var(--button-neon-color, rgba(255, 255, 255, 0.5)); / Usa variabile per colore neon /
-cursor: pointer;
-transition: transform 0.2s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.3s ease;
-box-shadow: 0 0 8px var(--button-neon-color, #fff), / Usa variabile per colore neon */
-inset 0 0 3px 1px rgba(0,0,0,0.5);
-line-height: 1.3;
-backdrop-filter: blur(3px);
--webkit-backdrop-filter: blur(3px);
-text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-}
-.link-button:hover, .link-button:active {
-transform: scale(1.03);
-border-color: white;
-animation: pulse-intense 1s infinite alternate;
-}
-/* *** STILI IMMAGINE FOOTER *** /
-#footer-image-container {
-width: 100%;
-margin-top: 2.5em;
-margin-bottom: 1em;
-/ background-color: black; / / <<< RIMOSSO/COMMENTATO */
-}
-#footer-image-container img {
-display: block;
-margin-left: auto;
-margin-right: auto;
-max-width: 80%;
-height: auto;
-border-radius: 8px;
-}
-/* Stili Errore Frontend */
-.error-message {
-color: #ff4444;
-font-weight: bold;
-margin-top: 2em;
-border: 1px solid #ff4444;
-padding: 1em;
-background-color: rgba(255, 0, 0, 0.1);
-border-radius: 0.5em;
-}
-body.error-page h1 {
-animation: none;
-text-shadow: none;
-color: #ff4444;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // !!! METTI QUI L'URL CORRETTO DELLA TUA DISTRIBUZIONE SCRIPT AGGIORNATA !!!
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; // O il tuo URL API corretto
+    const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)';
+
+    // Elementi DOM
+    const titleElement = document.getElementById('page-title');
+    const logoContainer = document.getElementById('logo-container');
+    const linkContainer = document.getElementById('link-container');
+    const loadingMessage = document.getElementById('loading-message');
+    const loader = document.getElementById('loader');
+    const loaderTextElement = document.getElementById('loading-text-container');
+    const loaderBarElement = loader ? loader.querySelector('.loader-bar') : null;
+    const footerImageContainer = document.getElementById('footer-image-container');
+    // Elementi DOM per il Countdown
+    const countdownContainer = document.getElementById('countdown-container'); // *** DA QUI IN GIÙ SONO PER IL TIMER ***
+    const countdownLabelElement = document.getElementById('countdown-label');
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+    const countdownMessageElement = document.getElementById('countdown-message');
+    let countdownIntervalId = null; // Variabile per l'intervallo del timer
+
+    async function loadData() {
+        if (loadingMessage) loadingMessage.style.display = 'block';
+
+        try {
+            console.log("Tentativo fetch API:", apiUrl);
+            const response = await fetch(apiUrl);
+            console.log("Risposta API Status:", response.status);
+            if (!response.ok) { throw new Error(`Errore HTTP: ${response.status}`); }
+            const result = await response.json();
+            console.log("Dati JSON ricevuti:", result);
+            if (!result.success || !result.data) { throw new Error("Formato dati API non valido. Ridistribuire script Google?"); }
+            const data = result.data;
+            console.log("Elaborazione dati:", data);
+
+            // --- Applica Configurazione Visiva ---
+
+            // Sfondo (da B7)
+            if (data.backgroundUrl && typeof data.backgroundUrl === 'string' && data.backgroundUrl.trim() !== '') {
+                const bgImageUrl = data.backgroundUrl.trim();
+                console.log("Applicando immagine di sfondo:", bgImageUrl);
+                document.body.style.backgroundImage = `url('${bgImageUrl}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+                document.body.style.backgroundAttachment = 'fixed';
+            } else {
+                console.log("Nessuna immagine di sfondo specificata (B7 vuoto).");
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundSize = '';
+                document.body.style.backgroundPosition = '';
+                document.body.style.backgroundRepeat = '';
+                document.body.style.backgroundAttachment = '';
+            }
+
+            // Titolo (da B4, B5)
+            document.title = data.title || "Link Hub";
+            if (titleElement) {
+                titleElement.textContent = data.title;
+                if (data.titleSize) titleElement.style.fontSize = data.titleSize; else titleElement.style.fontSize = '';
+                // if (data.titleFontFamily) titleElement.style.fontFamily = data.titleFontFamily; else titleElement.style.fontFamily = '';
+            }
+
+            // *** GESTIONE COUNTDOWN TIMER (LEGGE DA E3, E4, E5) ***
+            // Pulisci stato timer precedente ad ogni caricamento
+            if (countdownIntervalId) clearInterval(countdownIntervalId);
+            if (countdownContainer) countdownContainer.style.display = 'none'; // Nascondi di default
+            if (document.getElementById('countdown-timer')) document.getElementById('countdown-timer').style.display = 'block'; // Resetta visibilità numeri
+            if (countdownLabelElement) countdownLabelElement.style.display = 'block'; // Resetta visibilità etichetta
+            if (countdownMessageElement) countdownMessageElement.style.display = 'none'; // Nascondi messaggio finale
+
+            // Controlla se attivare il timer (da E4) e se la data target (da E5) è valida
+            if (countdownContainer && data.showCountdown === true && data.countdownTarget) {
+                console.log("Avvio configurazione countdown...");
+                const targetDateStr = data.countdownTarget;
+                const targetDate = new Date(targetDateStr.replace(" ", "T")); // Prova a parsare data da E5
+
+                if (!isNaN(targetDate)) {
+                    console.log("Data target countdown valida:", targetDate);
+
+                    // Imposta etichetta (da E3)
+                    if (countdownLabelElement && data.countdownLabel) {
+                        countdownLabelElement.textContent = data.countdownLabel;
+                    } else if (countdownLabelElement) {
+                        countdownLabelElement.textContent = '';
+                    }
+
+                    const updateCountdown = () => {
+                        const now = new Date().getTime();
+                        const distance = targetDate.getTime() - now;
+
+                        if (distance < 0) {
+                            clearInterval(countdownIntervalId);
+                            if (document.getElementById('countdown-timer')) document.getElementById('countdown-timer').style.display = 'none';
+                            if (countdownLabelElement) countdownLabelElement.style.display = 'none';
+                            if (countdownMessageElement) {
+                                countdownMessageElement.textContent = "Tempo Scaduto!"; // Messaggio di default alla fine
+                                countdownMessageElement.style.display = 'block';
+                            }
+                            console.log("Countdown terminato.");
+                            return;
+                        }
+
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        // Aggiorna elementi HTML (assicurati che esistano)
+                        if (daysElement) daysElement.textContent = days < 10 ? '0' + days : days;
+                        if (hoursElement) hoursElement.textContent = hours < 10 ? '0' + hours : hours;
+                        if (minutesElement) minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
+                        if (secondsElement) secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+                        // Mostra il contenitore solo se non è già visibile
+                        if (countdownContainer.style.display === 'none') {
+                            countdownContainer.style.display = 'block';
+                            console.log("Countdown container reso visibile.");
+                        }
+                    };
+
+                    updateCountdown(); // Chiamata iniziale per evitare ritardo
+                    countdownIntervalId = setInterval(updateCountdown, 1000); // Aggiorna ogni secondo
+
+                } else {
+                    console.error("Formato data/ora countdown (E5) non valido:", targetDateStr);
+                }
+            } else {
+                console.log("Countdown non attivo (E4 non spuntato o E5 vuoto/non valido).");
+            }
+            // *** FINE BLOCCO COUNTDOWN ***
+
+
+            // Loader (da B9, B10, B11, B12, D11, E11)
+            // NOTA: Il loader viene gestito *dopo* il countdown, quindi apparirà sotto di esso se entrambi sono attivi
+            if (loader) {
+                if (data.showLoader !== false) {
+                    loader.style.display = 'flex';
+                    if (loaderTextElement && data.loaderText) loaderTextElement.textContent = data.loaderText; else if (loaderTextElement) loaderTextElement.textContent = '';
+                    if (loaderBarElement && data.loaderBarColor) loaderBarElement.style.background = data.loaderBarColor;
+                    if (loaderTextElement && data.loaderTextSize) loaderTextElement.style.fontSize = data.loaderTextSize;
+                    if (data.loaderWidth) { loader.style.width = data.loaderWidth; loader.style.maxWidth = 'none'; } else { loader.style.width = ''; loader.style.maxWidth = ''; }
+                    if (loaderBarElement && data.loaderBarSpeed && typeof data.loaderBarSpeed === 'number' && data.loaderBarSpeed > 0) { loaderBarElement.style.animationDuration = data.loaderBarSpeed + 's'; } else if (loaderBarElement) { loaderBarElement.style.animationDuration = ''; }
+                } else { loader.style.display = 'none'; }
+            } else { console.warn("Elemento Loader non trovato."); }
+
+            // Logo (da B6)
+            logoContainer.innerHTML = '';
+            if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
+                const logoFilename = data.logoUrl.trim();
+                console.log("Cerco logo:", logoFilename);
+                const logoImg = document.createElement('img');
+                logoImg.src = logoFilename; logoImg.alt = 'Logo';
+                logoImg.onerror = () => { console.error("Errore logo:", logoFilename); logoContainer.innerHTML = '<p>Logo non trovato</p>'; };
+                logoContainer.appendChild(logoImg);
+            } else { console.log("Nessun logo specificato (B6 vuoto)."); }
+
+            // Pulsanti Link (da B17+, B14?, B15?)
+            linkContainer.innerHTML = '';
+            if (data.links && data.links.length > 0) {
+                data.links.forEach(link => {
+                    const button = document.createElement('a');
+                    button.href = link.url; button.textContent = link.label; button.className = 'link-button'; button.target = '_top';
+                    button.style.background = link.color || defaultButtonColor;
+                    if (data.buttonFontSize) button.style.fontSize = data.buttonFontSize; else button.style.fontSize = '';
+                    if (data.buttonPadding) button.style.padding = data.buttonPadding; else button.style.padding = '';
+                    linkContainer.appendChild(button); });
+                console.log("Creati", data.links.length, "link.");
+            } else { linkContainer.innerHTML = '<p>Nessun link attivo.</p>'; }
+
+            // Immagine Footer (da D5, D6)
+            if (footerImageContainer) {
+                footerImageContainer.innerHTML = '';
+                if (data.footerImageUrl && typeof data.footerImageUrl === 'string' && data.footerImageUrl.trim() !== '') {
+                    const imageUrl = data.footerImageUrl.trim();
+                    const imageAlt = (data.footerImageAlt && typeof data.footerImageAlt === 'string' && data.footerImageAlt.trim() !== '') ? data.footerImageAlt.trim() : 'Immagine Footer';
+                    console.log("Cerco immagine footer:", imageUrl, "Alt:", imageAlt);
+                    const footerImg = document.createElement('img');
+                    footerImg.src = imageUrl; footerImg.alt = imageAlt;
+                    footerImg.onerror = () => { console.error("Errore img footer:", imageUrl); footerImageContainer.innerHTML = '<p>Immagine non trovata</p>'; };
+                    footerImageContainer.appendChild(footerImg);
+                } else { console.log("Nessun URL immagine footer."); }
+            } else { console.warn("#footer-image-container non trovato."); }
+
+            // Nascondi Messaggio Testo 'Caricamento...' alla fine
+            if (loadingMessage) loadingMessage.style.display = 'none';
+
+        } catch (error) {
+             console.error('ERRORE FINALE:', error);
+             if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare: ${error.message}</p>`;
+             if (titleElement) titleElement.textContent = 'Errore'; document.title = 'Errore';
+             if (loadingMessage) loadingMessage.style.display = 'none'; if (loader) loader.style.display = 'none';
+             if (countdownIntervalId) clearInterval(countdownIntervalId); // Ferma timer in caso di errore
+             if (countdownContainer) countdownContainer.style.display = 'none'; // Nascondi timer in caso di errore
+             document.body.classList.add('error-page');
+        }
+    }
+
+    loadData();
+});
