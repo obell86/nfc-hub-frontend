@@ -4,7 +4,7 @@
 /* Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) */
 /* + Footer Image */
 /* FIX: Abilitato scroll per contenuto lungo */
-/* FIX: Sfondo contenitori immagini per trasparenza PNG */
+/* FIX: Rimosso sfondo forzato contenitori immagini */
 /* =================================== */
 
 /* --- Keyframes --- */
@@ -121,9 +121,8 @@ body {
 }
 
 /* Logo */
-/* *** MODIFICA: Aggiunto sfondo nero al contenitore logo *** */
 #logo-container {
-  background-color: black; /* Forza sfondo per trasparenza PNG */
+  /* background-color: black; */ /* <<< RIMOSSO/COMMENTATO */
 }
 #logo-container img {
   display: block;
@@ -237,12 +236,11 @@ h1 {
 }
 
 /* *** STILI IMMAGINE FOOTER *** */
-/* *** MODIFICA: Aggiunto sfondo nero al contenitore footer *** */
 #footer-image-container {
   width: 100%;
   margin-top: 2.5em;
   margin-bottom: 1em;
-  background-color: black; /* Forza sfondo per trasparenza PNG */
+  /* background-color: black; */ /* <<< RIMOSSO/COMMENTATO */
 }
 #footer-image-container img {
   display: block;
