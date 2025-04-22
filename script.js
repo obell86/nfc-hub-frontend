@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // !!! METTI QUI L'URL CORRETTO DELLA TUA DISTRIBUZIONE SCRIPT AGGIORNATA !!!
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec';
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec'; // O il tuo URL API corretto
     const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)';
 
     // Elementi DOM
@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const loaderTextElement = document.getElementById('loading-text-container');
     const loaderBarElement = loader ? loader.querySelector('.loader-bar') : null;
     const footerImageContainer = document.getElementById('footer-image-container');
+    // Elementi DOM per il Countdown
+    const countdownContainer = document.getElementById('countdown-container'); // *** DA QUI IN GIÙ SONO PER IL TIMER ***
+    const countdownLabelElement = document.getElementById('countdown-label');
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+    const countdownMessageElement = document.getElementById('countdown-message');
+    let countdownIntervalId = null; // Variabile per l'intervallo del timer
 
     async function loadData() {
         if (loadingMessage) loadingMessage.style.display = 'block';
@@ -29,31 +38,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- Applica Configurazione Visiva ---
 
-            // *** INIZIO MODIFICA: Applica Immagine di Sfondo (da B7) ***
+            // Sfondo (da B7)
             if (data.backgroundUrl && typeof data.backgroundUrl === 'string' && data.backgroundUrl.trim() !== '') {
                 const bgImageUrl = data.backgroundUrl.trim();
                 console.log("Applicando immagine di sfondo:", bgImageUrl);
-                // Applica l'URL come immagine di sfondo al body
                 document.body.style.backgroundImage = `url('${bgImageUrl}')`;
-
-                // Stili aggiuntivi per una visualizzazione comune dello sfondo
-                document.body.style.backgroundSize = 'cover';       // Scala per coprire l'intera area
-                document.body.style.backgroundPosition = 'center center'; // Centra l'immagine
-                document.body.style.backgroundRepeat = 'no-repeat';   // Non ripetere/tile l'immagine
-                document.body.style.backgroundAttachment = 'fixed'; // Opzionale: rende lo sfondo fisso durante lo scroll
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+                document.body.style.backgroundAttachment = 'fixed';
             } else {
                 console.log("Nessuna immagine di sfondo specificata (B7 vuoto).");
-                // Rimuovi eventuali immagini di sfondo precedenti se B7 è vuoto
                 document.body.style.backgroundImage = 'none';
                 document.body.style.backgroundSize = '';
                 document.body.style.backgroundPosition = '';
                 document.body.style.backgroundRepeat = '';
                 document.body.style.backgroundAttachment = '';
             }
-            // *** FINE MODIFICA SFONDO ***
 
-
-            // Titolo
+            // Titolo (da B4, B5)
             document.title = data.title || "Link Hub";
             if (titleElement) {
                 titleElement.textContent = data.title;
@@ -61,7 +64,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 // if (data.titleFontFamily) titleElement.style.fontFamily = data.titleFontFamily; else titleElement.style.fontFamily = '';
             }
 
-            // Loader
+            // *** GESTIONE COUNTDOWN TIMER (LEGGE DA E3, E4, E5) ***
+            // Pulisci stato timer precedente ad ogni caricamento
+            if (countdownIntervalId) clearInterval(countdownIntervalId);
+            if (countdownContainer) countdownContainer.style.display = 'none'; // Nascondi di default
+            if (document.getElementById('countdown-timer')) document.getElementById('countdown-timer').style.display = 'block'; // Resetta visibilità numeri
+            if (countdownLabelElement) countdownLabelElement.style.display = 'block'; // Resetta visibilità etichetta
+            if (countdownMessageElement) countdownMessageElement.style.display = 'none'; // Nascondi messaggio finale
+
+            // Controlla se attivare il timer (da E4) e se la data target (da E5) è valida
+            if (countdownContainer && data.showCountdown === true && data.countdownTarget) {
+                console.log("Avvio configurazione countdown...");
+                const targetDateStr = data.countdownTarget;
+                const targetDate = new Date(targetDateStr.replace(" ", "T")); // Prova a parsare data da E5
+
+                if (!isNaN(targetDate)) {
+                    console.log("Data target countdown valida:", targetDate);
+
+                    // Imposta etichetta (da E3)
+                    if (countdownLabelElement && data.countdownLabel) {
+                        countdownLabelElement.textContent = data.countdownLabel;
+                    } else if (countdownLabelElement) {
+                        countdownLabelElement.textContent = '';
+                    }
+
+                    const updateCountdown = () => {
+                        const now = new Date().getTime();
+                        const distance = targetDate.getTime() - now;
+
+                        if (distance < 0) {
+                            clearInterval(countdownIntervalId);
+                            if (document.getElementById('countdown-timer')) document.getElementById('countdown-timer').style.display = 'none';
+                            if (countdownLabelElement) countdownLabelElement.style.display = 'none';
+                            if (countdownMessageElement) {
+                                countdownMessageElement.textContent = "Tempo Scaduto!"; // Messaggio di default alla fine
+                                countdownMessageElement.style.display = 'block';
+                            }
+                            console.log("Countdown terminato.");
+                            return;
+                        }
+
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        // Aggiorna elementi HTML (assicurati che esistano)
+                        if (daysElement) daysElement.textContent = days < 10 ? '0' + days : days;
+                        if (hoursElement) hoursElement.textContent = hours < 10 ? '0' + hours : hours;
+                        if (minutesElement) minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
+                        if (secondsElement) secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+                        // Mostra il contenitore solo se non è già visibile
+                        if (countdownContainer.style.display === 'none') {
+                            countdownContainer.style.display = 'block';
+                            console.log("Countdown container reso visibile.");
+                        }
+                    };
+
+                    updateCountdown(); // Chiamata iniziale per evitare ritardo
+                    countdownIntervalId = setInterval(updateCountdown, 1000); // Aggiorna ogni secondo
+
+                } else {
+                    console.error("Formato data/ora countdown (E5) non valido:", targetDateStr);
+                }
+            } else {
+                console.log("Countdown non attivo (E4 non spuntato o E5 vuoto/non valido).");
+            }
+            // *** FINE BLOCCO COUNTDOWN ***
+
+
+            // Loader (da B9, B10, B11, B12, D11, E11)
+            // NOTA: Il loader viene gestito *dopo* il countdown, quindi apparirà sotto di esso se entrambi sono attivi
             if (loader) {
                 if (data.showLoader !== false) {
                     loader.style.display = 'flex';
@@ -73,26 +147,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else { loader.style.display = 'none'; }
             } else { console.warn("Elemento Loader non trovato."); }
 
-            // *** LOGO - CODICE CORRETTO PER NOMI FILE ***
-            logoContainer.innerHTML = ''; // Pulisci prima
+            // Logo (da B6)
+            logoContainer.innerHTML = '';
             if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
                 const logoFilename = data.logoUrl.trim();
                 console.log("Cerco logo:", logoFilename);
                 const logoImg = document.createElement('img');
-                logoImg.src = logoFilename;
-                logoImg.alt = 'Logo';
-                logoImg.onerror = () => {
-                    console.error("Errore caricando logo:", logoFilename);
-                    logoContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Logo non trovato</p>';
-                };
+                logoImg.src = logoFilename; logoImg.alt = 'Logo';
+                logoImg.onerror = () => { console.error("Errore logo:", logoFilename); logoContainer.innerHTML = '<p>Logo non trovato</p>'; };
                 logoContainer.appendChild(logoImg);
-            } else {
-                console.log("Nessun logo specificato (B6 vuoto).");
-            }
-            // *** FINE CODICE LOGO ***
+            } else { console.log("Nessun logo specificato (B6 vuoto)."); }
 
-            // Pulsanti Link
-            linkContainer.innerHTML = ''; // Pulisci messaggio caricamento
+            // Pulsanti Link (da B17+, B14?, B15?)
+            linkContainer.innerHTML = '';
             if (data.links && data.links.length > 0) {
                 data.links.forEach(link => {
                     const button = document.createElement('a');
@@ -100,12 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.style.background = link.color || defaultButtonColor;
                     if (data.buttonFontSize) button.style.fontSize = data.buttonFontSize; else button.style.fontSize = '';
                     if (data.buttonPadding) button.style.padding = data.buttonPadding; else button.style.padding = '';
-                    linkContainer.appendChild(button);
-                });
-                console.log("Creati", data.links.length, "pulsanti link.");
+                    linkContainer.appendChild(button); });
+                console.log("Creati", data.links.length, "link.");
             } else { linkContainer.innerHTML = '<p>Nessun link attivo.</p>'; }
 
-            // *** IMMAGINE FOOTER - CODICE CORRETTO PER NOMI FILE ***
+            // Immagine Footer (da D5, D6)
             if (footerImageContainer) {
                 footerImageContainer.innerHTML = '';
                 if (data.footerImageUrl && typeof data.footerImageUrl === 'string' && data.footerImageUrl.trim() !== '') {
@@ -113,18 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const imageAlt = (data.footerImageAlt && typeof data.footerImageAlt === 'string' && data.footerImageAlt.trim() !== '') ? data.footerImageAlt.trim() : 'Immagine Footer';
                     console.log("Cerco immagine footer:", imageUrl, "Alt:", imageAlt);
                     const footerImg = document.createElement('img');
-                    footerImg.src = imageUrl;
-                    footerImg.alt = imageAlt;
-                    footerImg.onerror = () => {
-                        console.error("Errore img footer:", imageUrl);
-                        footerImageContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Immagine non trovata</p>';
-                    };
+                    footerImg.src = imageUrl; footerImg.alt = imageAlt;
+                    footerImg.onerror = () => { console.error("Errore img footer:", imageUrl); footerImageContainer.innerHTML = '<p>Immagine non trovata</p>'; };
                     footerImageContainer.appendChild(footerImg);
-                } else { console.log("Nessun URL immagine footer specificato (D6 vuoto)."); }
+                } else { console.log("Nessun URL immagine footer."); }
             } else { console.warn("#footer-image-container non trovato."); }
-            // *** FINE CODICE FOOTER ***
 
-            // Nascondi Messaggio Testo alla fine
+            // Nascondi Messaggio Testo 'Caricamento...' alla fine
             if (loadingMessage) loadingMessage.style.display = 'none';
 
         } catch (error) {
@@ -132,6 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
              if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare: ${error.message}</p>`;
              if (titleElement) titleElement.textContent = 'Errore'; document.title = 'Errore';
              if (loadingMessage) loadingMessage.style.display = 'none'; if (loader) loader.style.display = 'none';
+             if (countdownIntervalId) clearInterval(countdownIntervalId); // Ferma timer in caso di errore
+             if (countdownContainer) countdownContainer.style.display = 'none'; // Nascondi timer in caso di errore
              document.body.classList.add('error-page');
         }
     }
