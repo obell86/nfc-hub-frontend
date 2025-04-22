@@ -62,51 +62,51 @@ body { position: relative; font-family: "Segoe UI", Roboto, Helvetica, Arial, sa
 /* Titolo H1 */
 h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height: 1.1; color: #ffffff; margin-top: .5em; margin-bottom: 1.5em; animation: high-quality-flicker 2s linear infinite; word-wrap: break-word; font-weight: bold; }
 
-/* *** STILI COUNTDOWN TIMER - NEON RIVEDUTO E COMPATTO *** */
+/* *** STILI COUNTDOWN TIMER - v3 COMPATTO *** */
 #countdown-container {
   margin-top: 1.5em;
   margin-bottom: 2.5em;
   width: 100%;
-  max-width: 450px; /* Puoi ridurre anche questo se necessario es. 400px */
-  padding: 0.5em 0.3em; /* Ridotto padding laterale ulteriormente */
+  max-width: 450px; /* Mantieni o riduci se serve */
+  padding: 0.4em 0.2em; /* <<< RIDOTTO PADDING CONTENITORE */
   box-sizing: border-box;
 }
 
 #countdown-label {
-  font-size: clamp(0.8rem, 2.5vw, 1rem); /* Ancora più piccolo */
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   opacity: 0.8;
   margin-bottom: 0.4em;
   display: block;
   color: #ccc;
   letter-spacing: 0.5px;
-  white-space: normal; /* Permetti all'etichetta di andare a capo */
+  white-space: normal;
 }
 
 #countdown-timer {
   font-family: 'Orbitron', 'Courier New', Courier, monospace;
-  /* Ridotto ancora un po' il font size, specialmente il vw */
-  font-size: clamp(1.5rem, 5.5vw, 2.4rem); /* <<< RIDOTTO */
+  /* Ridotto ancora il font size */
+  font-size: clamp(1.4rem, 5vw, 2.2rem); /* <<< RIDOTTO ULTERIORMENTE */
   font-weight: bold;
   color: #0ff;
-  text-shadow: /* Glow leggermente più sottile */
-    0 0 2px rgba(255, 255, 255, 0.6),
-    0 0 5px #0ff,
-    0 0 8px #0ff,
-    0 0 12px rgba(0, 255, 255, 0.5);
-  letter-spacing: 1.5px; /* <<< RIDOTTO MOLTO */
-  line-height: 1.2;
-  white-space: nowrap; /* Manteniamo per ora */
+  text-shadow: /* Glow ancora più sottile */
+    0 0 1px rgba(255, 255, 255, 0.5),
+    0 0 3px #0ff,
+    0 0 6px #0ff,
+    0 0 10px rgba(0, 255, 255, 0.4);
+  letter-spacing: 1px; /* <<< RIDOTTO ULTERIORMENTE */
+  line-height: 1.1; /* Ridotto per compattare verticalmente */
+  white-space: nowrap; /* Mantenuto per ora */
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
   box-sizing: border-box;
-  text-align: center; /* Centra il testo nel contenitore */
+  text-align: center;
 }
 
 /* Stile per gli span numerici (00) */
 #countdown-timer span {
   display: inline-block;
-  padding: 0; /* Rimosso padding extra tra cifre dello stesso numero */
+  padding: 0; /* Nessun padding extra */
 }
 
 /* Separatori ':' */
@@ -115,8 +115,8 @@ h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height:
 #countdown-timer span#seconds::before {
    content: ':';
    color: rgba(0, 255, 255, 0.4);
-   padding: 0 0.15em; /* <<< RIDOTTO PADDING SEPARATORE */
-   font-size: 0.7em; /* <<< RIDOTTO DIMENSIONE SEPARATORE */
+   padding: 0 0.1em; /* <<< RIDOTTO PADDING SEPARATORE */
+   font-size: 0.65em; /* <<< RIDOTTO DIMENSIONE SEPARATORE */
    vertical-align: middle;
    text-shadow: none;
 }
@@ -126,18 +126,20 @@ h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height:
 #countdown-timer span#minutes::after,
 #countdown-timer span#seconds::after {
    content: attr(id);
-   font-size: 0.4em; /* <<< RESO ANCORA PIÙ PICCOLO */
+   font-size: 0.35em; /* <<< RESO MOLTO PICCOLO */
    color: rgba(0, 255, 255, 0.6);
    text-transform: lowercase;
-   vertical-align: middle;
-   padding-left: 0.1em; /* <<< RIDOTTO PADDING LETTERE */
+   vertical-align: middle; /* Prova ad allineare meglio */
+   padding-left: 0.05em; /* <<< RIDOTTO PADDING LETTERE QUASI A ZERO */
    text-shadow: none;
    letter-spacing: 0.5px;
+   display: inline-block; /* Assicura che siano trattate come blocchi */
+   line-height: 1; /* Evita che influenzino troppo l'altezza linea */
 }
 
 
 #countdown-message {
-  font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+  font-size: clamp(1rem, 4vw, 1.3rem); /* Ridotto */
   font-weight: bold;
   color: #ffdf00;
   text-shadow: 0 0 5px #ffdf00, 0 0 10px rgba(255, 223, 0, 0.5);
