@@ -3,6 +3,7 @@
 /* Config: Titolo(size,font), Loader(show,txt,color,size,width,speed), Bottoni(font,pad) */
 /* Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) */
 /* + Footer Image */
+/* FIX: Abilitato scroll per contenuto lungo */
 /* =================================== */
 
 /* --- Keyframes --- */
@@ -100,11 +101,11 @@ body {
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* Puoi valutare se commentare anche questo se il contenuto è molto lungo */
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */ /* <<< COMMENTATO PER PERMETTERE LO SCROLL */
   background-color: black; /* Sfondo nero base */
 }
 
