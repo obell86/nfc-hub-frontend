@@ -28,6 +28,32 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Elaborazione dati:", data);
 
             // --- Applica Configurazione Visiva ---
+
+            // *** INIZIO MODIFICA: Applica Immagine di Sfondo (da B7) ***
+            if (data.backgroundUrl && typeof data.backgroundUrl === 'string' && data.backgroundUrl.trim() !== '') {
+                const bgImageUrl = data.backgroundUrl.trim();
+                console.log("Applicando immagine di sfondo:", bgImageUrl);
+                // Applica l'URL come immagine di sfondo al body
+                document.body.style.backgroundImage = `url('${bgImageUrl}')`;
+
+                // Stili aggiuntivi per una visualizzazione comune dello sfondo
+                document.body.style.backgroundSize = 'cover';       // Scala per coprire l'intera area
+                document.body.style.backgroundPosition = 'center center'; // Centra l'immagine
+                document.body.style.backgroundRepeat = 'no-repeat';   // Non ripetere/tile l'immagine
+                document.body.style.backgroundAttachment = 'fixed'; // Opzionale: rende lo sfondo fisso durante lo scroll
+            } else {
+                console.log("Nessuna immagine di sfondo specificata (B7 vuoto).");
+                // Rimuovi eventuali immagini di sfondo precedenti se B7 è vuoto
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundSize = '';
+                document.body.style.backgroundPosition = '';
+                document.body.style.backgroundRepeat = '';
+                document.body.style.backgroundAttachment = '';
+            }
+            // *** FINE MODIFICA SFONDO ***
+
+
+            // Titolo
             document.title = data.title || "Link Hub";
             if (titleElement) {
                 titleElement.textContent = data.title;
@@ -49,18 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // *** LOGO - CODICE CORRETTO PER NOMI FILE ***
             logoContainer.innerHTML = ''; // Pulisci prima
-            // Controlla se l'URL del logo (da B6) è valido
             if (data.logoUrl && typeof data.logoUrl === 'string' && data.logoUrl.trim() !== '') {
-                const logoFilename = data.logoUrl.trim(); // Prende il valore da B6 (es. "miologo.png")
+                const logoFilename = data.logoUrl.trim();
                 console.log("Cerco logo:", logoFilename);
                 const logoImg = document.createElement('img');
-                logoImg.src = logoFilename; // ---> USA IL NOME FILE DA B6
-                logoImg.alt = 'Logo'; // Alt generico per il logo
+                logoImg.src = logoFilename;
+                logoImg.alt = 'Logo';
                 logoImg.onerror = () => {
                     console.error("Errore caricando logo:", logoFilename);
                     logoContainer.innerHTML = '<p style="font-size: 0.8em; color: #ffcc00;">Logo non trovato</p>';
                 };
-                logoContainer.appendChild(logoImg); // Aggiunge l'immagine
+                logoContainer.appendChild(logoImg);
             } else {
                 console.log("Nessun logo specificato (B6 vuoto).");
             }
@@ -83,12 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // *** IMMAGINE FOOTER - CODICE CORRETTO PER NOMI FILE ***
             if (footerImageContainer) {
                 footerImageContainer.innerHTML = '';
-                if (data.footerImageUrl && typeof data.footerImageUrl === 'string' && data.footerImageUrl.trim() !== '') { // Controlla URL da D6
-                    const imageUrl = data.footerImageUrl.trim(); // Prende il valore da D6 (es. "footer.jpg")
-                    const imageAlt = (data.footerImageAlt && typeof data.footerImageAlt === 'string' && data.footerImageAlt.trim() !== '') ? data.footerImageAlt.trim() : 'Immagine Footer'; // Usa D5 o default
+                if (data.footerImageUrl && typeof data.footerImageUrl === 'string' && data.footerImageUrl.trim() !== '') {
+                    const imageUrl = data.footerImageUrl.trim();
+                    const imageAlt = (data.footerImageAlt && typeof data.footerImageAlt === 'string' && data.footerImageAlt.trim() !== '') ? data.footerImageAlt.trim() : 'Immagine Footer';
                     console.log("Cerco immagine footer:", imageUrl, "Alt:", imageAlt);
                     const footerImg = document.createElement('img');
-                    footerImg.src = imageUrl; // ---> USA IL NOME FILE DA D6
+                    footerImg.src = imageUrl;
                     footerImg.alt = imageAlt;
                     footerImg.onerror = () => {
                         console.error("Errore img footer:", imageUrl);
@@ -98,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else { console.log("Nessun URL immagine footer specificato (D6 vuoto)."); }
             } else { console.warn("#footer-image-container non trovato."); }
             // *** FINE CODICE FOOTER ***
-
 
             // Nascondi Messaggio Testo alla fine
             if (loadingMessage) loadingMessage.style.display = 'none';
