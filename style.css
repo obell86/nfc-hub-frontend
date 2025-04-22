@@ -87,12 +87,12 @@ h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height:
   /* Ridotto ancora il font size */
   font-size: clamp(1.4rem, 5vw, 2.2rem); /* <<< RIDOTTO ULTERIORMENTE */
   font-weight: bold;
-    color: #ff00ff; /* Colore base Magenta */
+    color: lime; /* Colore base Verde Lime */
   text-shadow:
-    0 0 3px rgba(255, 255, 255, 0.8), /* Glow bianco interno */
-    0 0 7px #ff00ff,  /* Glow Magenta */
-    0 0 12px #ff00ff, /* Glow Magenta */
-    0 0 18px rgba(255, 0, 255, 0.6); /* Glow Magenta esterno più ampio */
+    0 0 2px rgba(255, 255, 255, 0.7), /* Glow bianco interno */
+    0 0 5px lime,  /* Glow Verde Lime */
+    0 0 10px lime, /* Glow Verde Lime */
+    0 0 15px rgba(0, 255, 0, 0.5); /* Glow Verde Lime esterno più ampio */
   letter-spacing: 1px; /* <<< RIDOTTO ULTERIORMENTE */
   line-height: 1.1; /* Ridotto per compattare verticalmente */
   white-space: nowrap; /* Mantenuto per ora */
