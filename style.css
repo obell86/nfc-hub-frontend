@@ -62,14 +62,81 @@ body { position: relative; font-family: "Segoe UI", Roboto, Helvetica, Arial, sa
 /* Titolo H1 */
 h1 { /* font-size, font-family controllati da JS */ max-width: 95%; line-height: 1.1; color: #ffffff; margin-top: .5em; margin-bottom: 1.5em; animation: high-quality-flicker 2s linear infinite; word-wrap: break-word; font-weight: bold; }
 
-/* Countdown Timer Styles */
-#countdown-container { margin-top: 1.5em; margin-bottom: 2.5em; width: 100%; max-width: 450px; padding: 0.5em 1em; box-sizing: border-box; }
-#countdown-label { font-size: clamp(0.9rem, 3vw, 1.1rem); opacity: 0.8; margin-bottom: 0.5em; display: block; color: #ccc; letter-spacing: 1px; }
-#countdown-timer { font-family: 'Orbitron', 'Courier New', Courier, monospace; font-size: clamp(1.8rem, 7vw, 2.8rem); font-weight: bold; color: #0ff; text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 7px #0ff, 0 0 12px #0ff, 0 0 18px rgba(0, 255, 255, 0.7); letter-spacing: 3px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#countdown-timer span { display: inline-block; padding: 0 0.1em; }
-#countdown-timer span#hours::before, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { content: ':'; color: rgba(0, 255, 255, 0.5); padding: 0 0.3em; font-size: 0.8em; vertical-align: middle; text-shadow: none; }
-#countdown-timer span#days::after, #countdown-timer span#hours::after, #countdown-timer span#minutes::after, #countdown-timer span#seconds::after { content: attr(id); font-size: 0.5em; color: rgba(0, 255, 255, 0.7); text-transform: lowercase; vertical-align: middle; padding-left: 0.2em; text-shadow: none; letter-spacing: 1px; }
-#countdown-message { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: bold; color: #ffdf00; text-shadow: 0 0 5px #ffdf00, 0 0 10px rgba(255, 223, 0, 0.5); margin-top: 0.7em; }
+/* *** STILI COUNTDOWN TIMER - SUPER SEMPLIFICATI PER TEST *** */
+#countdown-container {
+  margin-top: 1.5em;
+  margin-bottom: 2.5em;
+  width: 100%;
+  max-width: 450px;
+  padding: 0.5em 0.5em;
+  box-sizing: border-box;
+  border: 1px dashed red; /* BORDO ROSSO PER VEDERLO */
+}
+
+#countdown-label {
+  font-size: 1rem; /* Dimensione fissa semplice */
+  opacity: 1;
+  margin-bottom: 0.5em;
+  display: block;
+  color: white; /* Bianco semplice */
+  letter-spacing: normal;
+}
+
+#countdown-timer {
+  font-family: 'Courier New', Courier, monospace; /* Font standard */
+  font-size: 2rem; /* Dimensione fissa semplice */
+  font-weight: normal; /* Normale */
+  color: white; /* Bianco semplice */
+  text-shadow: none; /* NESSUNA OMBRA */
+  letter-spacing: normal; /* Normale */
+  line-height: 1.2;
+  white-space: normal; /* Permetti di andare a capo se necessario */
+  overflow: visible; /* Mostra se esce */
+  text-overflow: clip;
+  width: auto; /* Lascia che si adatti */
+  border: 1px dashed lime; /* BORDO VERDE PER VEDERLO */
+}
+
+/* Stile per gli span numerici (00) */
+#countdown-timer span {
+  display: inline; /* Prova inline invece di inline-block */
+  padding: 0;
+}
+
+/* Separatori ':' tra ore, minuti, secondi */
+#countdown-timer span#hours::before,
+#countdown-timer span#minutes::before,
+#countdown-timer span#seconds::before {
+   content: ':';
+   color: white; /* Bianco */
+   padding: 0 0.1em; /* Meno spazio */
+   font-size: 1em; /* Stessa dimensione */
+   vertical-align: baseline;
+   text-shadow: none;
+}
+/* Lettere d,h,m,s dopo i numeri */
+#countdown-timer span#days::after,
+#countdown-timer span#hours::after,
+#countdown-timer span#minutes::after,
+#countdown-timer span#seconds::after {
+   content: attr(id);
+   font-size: 0.8em; /* Più piccolo */
+   color: white; /* Bianco */
+   text-transform: lowercase;
+   vertical-align: baseline;
+   padding-left: 0.1em; /* Meno spazio */
+   text-shadow: none;
+   letter-spacing: normal;
+}
+
+
+#countdown-message {
+  font-size: 1.2rem; /* Semplice */
+  font-weight: bold;
+  color: yellow; /* Giallo semplice */
+  text-shadow: none;
+  margin-top: 0.7em;
+}
 
 /* Loader */
 .loader-container { position: relative; margin-bottom: 3em; justify-content: center; align-items: center; background-color: rgba(15, 15, 15, .7); border-radius: 1.5em; border: 1px solid rgba(100, 100, 100, .5); box-shadow: inset 0 0 8px rgba(0, 0, 0, .6); overflow: hidden; z-index: 1; } /* width, display gestiti da JS */
