@@ -3,32 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caricamento...</title> <!-- Verrà aggiornato da JS -->
+    <title>Caricamento...</title>
+    <!-- Aggiungi qui eventuali link a Google Fonts se necessario -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Contenitore per gli effetti di sfondo (se necessari) -->
     <div class="background-effects">
-         <!-- Sparkles verranno aggiunti qui da JS se necessario, o usa CSS :before/:after -->
          <div class="shooting-star"></div>
     </div>
 
-    <!-- Contenuto Principale -->
     <div class="main-content">
-        <div id="logo-container">
-            <!-- Il logo verrà inserito qui da JS -->
+        <div id="logo-container"></div>
+        <h1 id="page-title"></h1>
+        <div class="loader-container" id="loader" style="display: none;">
+           <div class="loader-bar"></div>
+           <span id="loading-text-container"></span>
         </div>
-        <h1 id="page-title"></h1> <!-- Titolo verrà inserito qui -->
-        
-        <div class="loader-container" id="loader" style="display: none;"> <!-- Inizia nascosto -->
-    <div class="loader-bar"></div>
-    <span id="loading-text-container"></span> <!-- SPAN VUOTO -->
- </div>
-        
         <div class="link-container" id="link-container">
-            <!-- I pulsanti verranno inseriti qui da JS -->
-            <p id="loading-message">Caricamento link...</p> <!-- Messaggio temporaneo -->
+            <p id="loading-message">Caricamento link...</p>
         </div>
+        <!-- Contenitore per l'immagine footer -->
+        <div id="footer-image-container"></div>
     </div>
 
     <script src="script.js"></script>
