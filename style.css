@@ -4,6 +4,7 @@
 /* Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) */
 /* + Footer Image */
 /* FIX: Abilitato scroll per contenuto lungo */
+/* FIX: Sfondo contenitori immagini per trasparenza PNG */
 /* =================================== */
 
 /* --- Keyframes --- */
@@ -105,7 +106,7 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  /* overflow: hidden; */ /* <<< COMMENTATO PER PERMETTERE LO SCROLL */
+  /* overflow: hidden; */ /* Commentato per scroll */
   background-color: black; /* Sfondo nero base */
 }
 
@@ -120,6 +121,10 @@ body {
 }
 
 /* Logo */
+/* *** MODIFICA: Aggiunto sfondo nero al contenitore logo *** */
+#logo-container {
+  background-color: black; /* Forza sfondo per trasparenza PNG */
+}
 #logo-container img {
   display: block;
   max-width: 120px;
@@ -128,7 +133,7 @@ body {
   margin-right: auto;
   margin-bottom: 1.5em;
   animation: logo-float 3s ease-in-out infinite;
-  background-color: transparent;
+  /* Rimosso background-color: transparent; se presente */
 }
 
 /* Titolo H1 */
@@ -232,19 +237,20 @@ h1 {
 }
 
 /* *** STILI IMMAGINE FOOTER *** */
+/* *** MODIFICA: Aggiunto sfondo nero al contenitore footer *** */
 #footer-image-container {
-  width: 100%; /* Occupa larghezza disponibile */
-  margin-top: 2.5em; /* Spazio sopra l'immagine, regola se necessario */
-  margin-bottom: 1em; /* Spazio sotto l'immagine */
-  /* text-align: center; è già nel body */
+  width: 100%;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  background-color: black; /* Forza sfondo per trasparenza PNG */
 }
 #footer-image-container img {
-  display: block; /* Necessario per centrare con margin auto */
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  max-width: 80%;  /* Limita larghezza massima, regola se necessario */
-  height: auto;    /* Mantiene le proporzioni */
-  border-radius: 8px; /* Angoli arrotondati (opzionale) */
+  max-width: 80%;
+  height: auto;
+  border-radius: 8px;
 }
 
 
