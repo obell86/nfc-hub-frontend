@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // *** INCOLLA QUI IL NUOVO URL DELL'APP WEB DISTRIBUITA ***
-    const apiUrl = '1GLq5c3G2-pkusXoCbAiDYNmaE1Zg4ZdXXYn4s-xfaoE';
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyJu8vr_L9oqqh4GdNMEPjcEyumyC0rRi3oq0XdGMq7wDCnYLQCBZmuLw3qzvCEiHBQ/exec';
     const defaultButtonColor = 'linear-gradient(45deg, #ff00ff, #00ffff)'; // Fallback colore pulsante
 
     // Elementi DOM
