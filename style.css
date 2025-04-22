@@ -2,7 +2,7 @@
 /* STYLE.CSS - Party Style v9.9++      */
 /* Config: Titolo(size,font), Loader(show,txt,color,size,width,speed), Bottoni(font,pad) */
 /* Animation: Titolo(flicker), Logo(float), LoaderTxt(old-bar-flicker), Btn(pulse) */
-/* + Footer Image */
+/* + Footer Image + Countdown Timer */
 /* FIX: Abilitato scroll per contenuto lungo */
 /* FIX: Rimosso sfondo forzato contenitori immagini */
 /* =================================== */
@@ -18,81 +18,22 @@
 
 /* *** NUOVA ANIMAZIONE FLICKER "OLD BAR" PER TESTO LOADER *** */
 @keyframes old-bar-flicker {
-  0%, 100% { /* Stato "Acceso" Pieno */
-    opacity: 1;
-    /* Ombra neon definita - Meno blur rispetto al titolo */
-    text-shadow:
-      0 0 2px #fff,
-      0 0 5px #fff,
-      0 0 8px #0ff, /* Ciano/Acqua per il colore neon */
-      0 0 12px #0ff,
-      0 0 15px #0ff;
-  }
-  50% { /* Stato "Fioco" */
-    opacity: 0.6;
-    text-shadow:
-      0 0 2px rgba(255, 255, 255, 0.7),
-      0 0 4px rgba(0, 255, 255, 0.5), /* Glow ridotto */
-      0 0 8px rgba(0, 255, 255, 0.3);
-  }
-  /* Aggiungiamo intermittenze più rapide e irregolari */
-  5% { opacity: 0.7; }
-  8% { opacity: 1; } /* Breve ritorno */
-  15% { opacity: 0.4; /* Calo deciso */
-     text-shadow: 0 0 2px rgba(0, 255, 255, 0.3); /* Quasi spento */
-  }
-  18% { opacity: 1; } /* Ritorno rapido */
-  30% { opacity: 0.8; }
-  40% { opacity: 1; }
-  60% { opacity: 0.5; }
-  63% { opacity: 1; }
-  75% { opacity: 0.7; }
-  85% { opacity: 1; }
-  92% { opacity: 0.6; }
-  95% { opacity: 1; }
+  0%, 100% { opacity: 1; text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #0ff, 0 0 12px #0ff, 0 0 15px #0ff; }
+  50% { opacity: 0.6; text-shadow: 0 0 2px rgba(255, 255, 255, 0.7), 0 0 4px rgba(0, 255, 255, 0.5), 0 0 8px rgba(0, 255, 255, 0.3); }
+  5% { opacity: 0.7; } 8% { opacity: 1; } 15% { opacity: 0.4; text-shadow: 0 0 2px rgba(0, 255, 255, 0.3); } 18% { opacity: 1; } 30% { opacity: 0.8; } 40% { opacity: 1; } 60% { opacity: 0.5; } 63% { opacity: 1; } 75% { opacity: 0.7; } 85% { opacity: 1; } 92% { opacity: 0.6; } 95% { opacity: 1; }
 }
 
 /* Animazione per il Glow del Pulsante su Hover/Attivo */
-@keyframes pulse-intense {
-  0%, 100% {
-    box-shadow:
-      0 0 8px var(--button-neon-color, #fff), /* Usa colore variabile */
-      inset 0 0 3px 1px rgba(0,0,0,0.5);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow:
-      0 0 15px var(--button-neon-color, #fff),
-      0 0 25px var(--button-neon-color, #fff),
-      inset 0 0 4px 1px rgba(0,0,0,0.4);
-    transform: scale(1.03);
-  }
-}
+@keyframes pulse-intense { /* ... (invariato) ... */ }
 
 /* Animazione Float Logo */
-@keyframes logo-float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
+@keyframes logo-float { /* ... (invariato) ... */ }
 
 /* Keyframe per Flicker Neon Titolo H1 */
-@keyframes high-quality-flicker {
-  0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5), 0 0 70px rgba(0, 255, 255, 0.3); opacity: 1; }
-  15% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 6px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3); opacity: 0.8; }
-  30% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 9px rgba(0, 255, 255, 0.8), 0 0 18px rgba(0, 255, 255, 0.6), 0 0 35px rgba(0, 255, 255, 0.4); opacity: 0.95; }
-   42% { text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); opacity: 0.5; }
-   47% { text-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5); opacity: 1; }
-  65% { text-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(0, 255, 255, 0.6); opacity: 0.9; }
-  80% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.6); opacity: 0.7; }
-}
+@keyframes high-quality-flicker { /* ... (invariato) ... */ }
 
 /* --- Stili Generali --- */
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+html { /* ... (invariato) ... */ }
 body {
   position: relative;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -111,159 +52,118 @@ body {
 }
 
 /* --- Contenuto Principale --- */
-.main-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
+.main-content { /* ... (invariato) ... */ }
 
 /* Logo */
-#logo-container {
-  /* background-color: black; */ /* <<< RIMOSSO/COMMENTATO */
-}
-#logo-container img {
-  display: block;
-  max-width: 120px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1.5em;
-  animation: logo-float 3s ease-in-out infinite;
-  /* Rimosso background-color: transparent; se presente */
-}
+#logo-container { /* ... (invariato) ... */ }
+#logo-container img { /* ... (invariato) ... */ }
 
 /* Titolo H1 */
-h1 {
-  /* font-size: controllato da JS */
-  /* font-family: controllato da JS (se implementato) */
-  max-width: 95%;
-  line-height: 1.1;
-  color: #ffffff;
-  margin-top: 0.5em;
-  margin-bottom: 1.5em;
-  animation: high-quality-flicker 2s linear infinite;
-  word-wrap: break-word;
-  font-weight: bold;
+h1 { /* ... (invariato) ... */ }
+
+/* *** NUOVI STILI COUNTDOWN TIMER *** */
+#countdown-container {
+  margin-top: 1.5em; /* Spazio sopra */
+  margin-bottom: 2.5em; /* Spazio sotto */
+  width: 100%; /* Occupa larghezza disponibile */
+  max-width: 450px; /* Allinea con larghezza pulsanti (opzionale) */
+  padding: 0.5em 1em; /* Padding interno */
+  box-sizing: border-box;
+  /* Esempio opzionale per evidenziare: */
+  /* border: 1px solid rgba(0, 255, 255, 0.2); */
+  /* border-radius: 10px; */
 }
+
+#countdown-label {
+  font-size: clamp(0.9rem, 3vw, 1.1rem); /* Dimensione reattiva per etichetta */
+  opacity: 0.8;
+  margin-bottom: 0.5em;
+  display: block;
+  color: #ccc; /* Colore grigio chiaro per etichetta */
+  letter-spacing: 1px;
+}
+
+#countdown-timer {
+  font-family: 'Orbitron', 'Courier New', Courier, monospace; /* Aggiungi Orbitron via <link> in HTML */
+  /* Dimensione reattiva per i numeri (min, preferita, max) */
+  font-size: clamp(1.8rem, 7vw, 2.8rem); /* Adatta 7vw se troppo grande/piccolo su mobile */
+  font-weight: bold;
+  color: #0ff; /* Colore neon Ciano */
+  /* Effetto neon definito */
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.8), /* Glow bianco interno */
+    0 0 7px #0ff,
+    0 0 12px #0ff,
+    0 0 18px rgba(0, 255, 255, 0.7); /* Glow ciano più ampio */
+  letter-spacing: 3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Stile per gli span numerici (00) */
+#countdown-timer span {
+  display: inline-block;
+  padding: 0 0.1em;
+}
+
+/* Aggiunge separatori ':' e unità di tempo (d,h,m,s) */
+/* Due punti tra ore, minuti, secondi */
+#countdown-timer span#hours::before,
+#countdown-timer span#minutes::before,
+#countdown-timer span#seconds::before {
+   content: ':';
+   color: rgba(0, 255, 255, 0.5);
+   padding: 0 0.3em;
+   font-size: 0.8em;
+   vertical-align: middle;
+   text-shadow: none;
+}
+/* Lettere dopo i numeri */
+#countdown-timer span#days::after,
+#countdown-timer span#hours::after,
+#countdown-timer span#minutes::after,
+#countdown-timer span#seconds::after {
+   /* Usa l'ID come contenuto (d, h, m, s) */
+   content: attr(id);
+   font-size: 0.5em; /* Più piccolo */
+   color: rgba(0, 255, 255, 0.7);
+   text-transform: lowercase;
+   vertical-align: middle;
+   padding-left: 0.2em; /* Spazio dalla cifra */
+   text-shadow: none; /* Nessun glow */
+   letter-spacing: 1px; /* Spaziatura normale per lettere */
+}
+
+
+#countdown-message {
+  font-size: clamp(1.2rem, 5vw, 1.5rem); /* Dimensione reattiva */
+  font-weight: bold;
+  color: #ffdf00; /* Giallo/Oro acceso */
+  text-shadow: 0 0 5px #ffdf00, 0 0 10px rgba(255, 223, 0, 0.5);
+  margin-top: 0.7em;
+}
+
 
 /* Loader */
-.loader-container {
-  position: relative;
-  /* width: controllato da JS */
-  /* height: controllato da JS (se implementato) */
-  margin-bottom: 3em;
-  /* display: gestito da JS */
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(15, 15, 15, 0.7);
-  border-radius: 1.5em;
-  border: 1px solid rgba(100, 100, 100, 0.5);
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
-  overflow: hidden;
-  z-index: 1;
-}
-/* Barra sotto il testo */
-.loader-bar {
-  position: absolute; top: 0; left: 0;
-  height: 100%; width: 0%;
-  /* background: gestito da JS */
-  opacity: 0.5;
-  border-radius: 1.5em;
-  /* animation-duration: controllato da JS */
-  animation: loading-loop linear infinite; /* Nome animazione */
-  z-index: 1;
-}
-/* Testo Caricamento (con effetto Old Bar) */
-#loading-text-container {
-  position: relative; z-index: 2;
-  /* font-size: controllato da JS */
-  font-weight: bold;
-  color: #ffffff; /* Colore base */
-  letter-spacing: 3px;
-  /* Stile base per text-shadow (sovrascritto da animazione) */
-  text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #0ff, 0 0 12px #0ff, 0 0 15px #0ff;
-  overflow: hidden; white-space: nowrap;
-  display: inline-block;
-  /* Applica l'animazione Old Bar Flicker */
-  animation: old-bar-flicker 2.5s linear infinite;
-}
+.loader-container { /* ... (invariato) ... */ }
+.loader-bar { /* ... (invariato) ... */ }
+#loading-text-container { /* ... (invariato) ... */ }
 
 /* Contenitore Pulsanti */
-.link-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5em;
-  margin-top: 1em;
-  width: 100%;
-  max-width: 450px;
-}
-#loading-message, .link-container p {
-  font-size: 1.2em;
-  opacity: 0.7;
-}
+.link-container { /* ... (invariato) ... */ }
+#loading-message, .link-container p { /* ... (invariato) ... */ }
 
 /* Pulsante Link */
-.link-button {
-  position: relative;
-  display: block;
-  width: 100%;
-  /* padding: controllato da JS */
-  /* background: controllato da JS */
-  color: white;
-  text-decoration: none;
-  /* font-size: controllato da JS */
-  border-radius: 50px; /* Forma a pillola */
-  font-weight: bold;
-  border: 2px solid;
-  border-color: var(--button-neon-color, rgba(255, 255, 255, 0.5)); /* Usa variabile per colore neon */
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.3s ease;
-  box-shadow: 0 0 8px var(--button-neon-color, #fff), /* Usa variabile per colore neon */
-              inset 0 0 3px 1px rgba(0,0,0,0.5);
-  line-height: 1.3;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-}
-.link-button:hover, .link-button:active {
-  transform: scale(1.03);
-  border-color: white;
-  animation: pulse-intense 1s infinite alternate;
-}
+.link-button { /* ... (invariato) ... */ }
+.link-button:hover, .link-button:active { /* ... (invariato) ... */ }
 
 /* *** STILI IMMAGINE FOOTER *** */
-#footer-image-container {
-  width: 100%;
-  margin-top: 2.5em;
-  margin-bottom: 1em;
-  /* background-color: black; */ /* <<< RIMOSSO/COMMENTATO */
-}
-#footer-image-container img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 80%;
-  height: auto;
-  border-radius: 8px;
-}
+#footer-image-container { /* ... (invariato, senza sfondo) ... */ }
+#footer-image-container img { /* ... (invariato) ... */ }
 
 
 /* Stili Errore Frontend */
-.error-message {
-  color: #ff4444;
-  font-weight: bold;
-  margin-top: 2em;
-  border: 1px solid #ff4444;
-  padding: 1em;
-  background-color: rgba(255, 0, 0, 0.1);
-  border-radius: 0.5em;
-}
-body.error-page h1 {
-  animation: none;
-  text-shadow: none;
-  color: #ff4444;
-}
+.error-message { /* ... (invariato) ... */ }
+body.error-page h1 { /* ... (invariato) ... */ }
