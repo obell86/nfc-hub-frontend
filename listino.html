@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D-LAB 3D Studio - Portachiavi Personalizzati</title>
+  <style>
+    /* --- Stili Generali --- */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font pulito e moderno */
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa; /* Sfondo leggermente grigio chiaro */
+      color: #343a40; /* Testo principale grigio scuro */
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto; /* Centra e aggiunge spazio verticale */
+      padding: 35px;
+      background-color: #ffffff; /* Sfondo bianco per il contenuto */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombra più morbida */
+      border-radius: 8px; /* Angoli arrotondati */
+    }
+
+    /* --- Titoli e Testi --- */
+    h1 {
+      color: #0d6efd; /* Blu primario brillante */
+      margin-top: 0;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #dee2e6; /* Separatore sottile */
+      font-weight: 600; /* Leggermente più bold */
+    }
+
+    h2 {
+      color: #0a58ca; /* Blu leggermente più scuro per H2 */
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    h3 {
+      color: #343a40; /* Grigio scuro per H3 */
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-bottom: 1.2em; /* Spaziatura tra paragrafi */
+      color: #495057; /* Grigio leggermente più chiaro per leggibilità */
+    }
+
+    strong {
+      color: #212529; /* Nero leggermente più soft per il bold */
+    }
+
+    /* --- Sezione Descrizione --- */
+    .description {
+      background-color: #eef2f7; /* Blu molto chiaro e desaturato per sfondo */
+      padding: 25px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+      border-left: 4px solid #0d6efd; /* Accento blu a sinistra */
+    }
+    .description p:last-child {
+      margin-bottom: 0; /* Rimuove margine extra nell'ultimo paragrafo */
+    }
+
+
+    /* --- Stili Tabelle --- */
+    .table-container {
+      display: flex;
+      flex-direction: column; /* Mantiene le tabelle una sotto l'altra */
+      gap: 30px; /* Spazio tra le tabelle */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      font-size: 0.95em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Ombra molto leggera per le tabelle */
+      border-radius: 6px; /* Angoli arrotondati anche per la tabella */
+      overflow: hidden; /* Necessario per applicare border-radius alle celle */
+    }
+
+    th, td {
+      border: 1px solid #dee2e6; /* Bordo grigio chiaro */
+      padding: 12px 15px; /* Più padding per ariosità */
+      text-align: center;
+    }
+
+    th {
+      background-color: #0a58ca; /* Blu scuro (lo stesso di H2) */
+      color: white;
+      font-weight: 600; /* Intestazioni in grassetto */
+      text-transform: uppercase; /* Maiuscoletto per le intestazioni */
+      letter-spacing: 0.5px;
+      border-top: none; /* Rimuove bordo doppio in alto */
+      border-left: none;
+      border-right: none;
+    }
+    /* Rimuove bordi esterni eccedenti */
+     th:first-child { border-left: none; }
+     th:last-child { border-right: none; }
+     tr:last-child td { border-bottom: none; }
+     tr td:first-child { border-left: none; }
+     tr td:last-child { border-right: none; }
+
+
+    td {
+      background-color: #ffffff; /* Sfondo bianco per le celle */
+    }
+
+    /* Stile righe alternate (opzionale, per leggibilità) */
+    tbody tr:nth-child(even) td {
+      background-color: #f8f9fa; /* Grigio molto chiaro per righe alternate */
+    }
+
+
+    /* --- Sezione Call-to-Action (Demo) --- */
+    .cta {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+      background-color: #f8f9fa; /* Sfondo grigio chiaro per separare */
+      border-radius: 6px;
+    }
+
+    .cta p:first-child { /* Testo sopra il bottone */
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        color: #343a40;
+    }
+
+    .cta .demo-button {
+      display: inline-block; /* Permette padding e margini */
+      background-color: #198754; /* Verde per azione positiva */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Transizione per hover */
+      font-size: 1em;
+      border: none; /* Rimuove bordi default link */
+      cursor: pointer;
+    }
+
+    .cta .demo-button:hover {
+      background-color: #157347; /* Verde più scuro all'hover */
+      transform: translateY(-2px); /* Leggero effetto sollevamento */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .cta .note {
+      font-size: 0.9em;
+      color: #6c757d; /* Grigio medio per la nota */
+      margin-top: 20px; /* Spazio sopra la nota */
+    }
+    .cta .note strong {
+       color: #495057; /* Grigio leggermente più scuro per il bold nella nota */
+    }
+
+
+    /* --- Lista Caratteristiche --- */
+    ul.features {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Layout a griglia responsiva */
+      gap: 15px; /* Spazio tra gli elementi */
+    }
+
+    ul.features li {
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #e9ecef; /* Bordo sottile */
+      display: flex;
+      align-items: center; /* Allinea icona e testo */
+    }
+
+    ul.features li::before {
+      content: "✔️";
+      color: #198754; /* Verde (lo stesso del bottone demo) */
+      font-size: 1.2em;
+      margin-right: 10px; /* Spazio tra icona e testo */
+      flex-shrink: 0; /* Impedisce all'icona di restringersi */
+    }
+
+
+    /* --- Footer --- */
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #6c757d; /* Grigio medio */
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6; /* Separatore sopra il footer */
+    }
+    .footer strong {
+        color: #495057;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>D-LAB 3D Studio - Portachiavi Personalizzati</h1>
+
+    <!-- Descrizione (contenuto invariato, stile aggiornato) -->
+    <div class="description">
+      <p>Produciamo portachiavi unici, realizzati su misura con possibilità di scegliere tra due versioni: <strong>con chip integrato programmabile</strong> e <strong>senza chip</strong>. Ogni pezzo è personalizzabile, ideale per aziende, eventi, promozioni o semplicemente per distinguersi con stile.</p>
+      <p>I portachiavi base sono stampati con <strong>fino a 2 colori inclusi</strong>. È possibile aggiungere ulteriori colori con un supplemento di <strong>€0,25/€0,30</strong> a colore.</p>
+    </div>
+
+    <h2>Listino Prezzi</h2>
+    <!-- Tabelle (contenuto invariato, stile aggiornato) -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Quantità</th>
+            <th>Prezzo Unitario (senza chip)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1-10 pezzi</td><td>€3,00</td></tr>
+          <tr><td>11-30 pezzi</td><td>€2,70</td></tr>
+          <tr><td>31-50 pezzi</td><td>€2,30</td></tr>
+          <tr><td>Oltre 50 pezzi</td><td>€2,00</td></tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Quantità</th>
+            <th>Prezzo Unitario (con chip programmabile)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1-10 pezzi</td><td>€7,50</td></tr>
+          <tr><td>11-30 pezzi</td><td>€7,00</td></tr>
+          <tr><td>31-50 pezzi</td><td>€6,50</td></tr>
+          <tr><td>Oltre 50 pezzi</td><td>€6,00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Call to Action con Bottone Demo -->
+    <div class="cta">
+      <p><strong>Scopri come funziona il servizio con chip:</strong></p>
+      <!-- Ho aggiunto la classe 'demo-button' al link -->
+      <a href="https://obell86.github.io/nfc-hub-frontend/" target="_blank" class="demo-button">🔗 Visualizza la Demo</a>
+      <p class="note"><strong>Nota:</strong> Il servizio di gestione dei link dinamici (aggiornamento immagini, loghi, contenuti su richiesta) richiede un <strong>contributo mensile di €15</strong> per rimanere attivo.</p>
+    </div>
+
+    <h2>Servizi Inclusi</h2>
+    <!-- Lista Features (contenuto invariato, stile aggiornato) -->
+    <ul class="features">
+      <li>Realizzazione portachiavi personalizzati in 3D</li>
+      <li>Fino a 2 colori base inclusi nel prezzo</li>
+      <li>Design su misura e possibilità di aggiunte</li>
+      <li>Chip programmabile integrato (solo modelli dedicati)</li>
+      <li>Gestione contenuti dinamici (con contributo mensile)</li>
+      <li>Supporto clienti per modifiche e personalizzazioni</li>
+      <li>Spedizione veloce e tracciabile in tutta Italia</li> <!-- Leggermente modificato per chiarezza -->
+    </ul>
+
+    <!-- Footer (contenuto invariato, stile aggiornato) -->
+    <div class="footer">
+      Realizzato da <strong>D-LAB 3D Studio</strong>
+    </div>
+  </div>
+</body>
+</html>
